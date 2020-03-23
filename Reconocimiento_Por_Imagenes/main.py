@@ -68,9 +68,9 @@ def desvia_estan_lista(lista):
 # asi como la ubicacion de los mismos mayor igual a cero.
 
 #Leer la plantilla
-template_green = cv2.imread('/Users/belindabrown/Desktop/Reconocimiento13/Templates/ledVerde.jpg',0)
-template_naranja = cv2.imread('/Users/belindabrown/Desktop/Reconocimiento13/Templates/ledNaranja.jpg',0)
-template_naranja_oscuro = cv2.imread('/Users/belindabrown/Desktop/Reconocimiento13/Templates/ledNaranjaOscuro.jpg',0)
+template_green = cv2.imread('/Users/belindabrown/Desktop/Reconocimiento13/Reconocimiento_Por_Imagenes/Templates/ledVerde.jpg',0)
+template_naranja = cv2.imread('/Users/belindabrown/Desktop/Reconocimiento13/Reconocimiento_Por_Imagenes/Templates/ledNaranja.jpg',0)
+template_naranja_oscuro = cv2.imread('/Users/belindabrown/Desktop/Reconocimiento13/Reconocimiento_Por_Imagenes/Templates/ledNaranjaOscuro.jpg',0)
 
 #Almacenar la anchura (w) y la altura (h) de la plantilla
 w_verde, h_verde = template_green.shape[::-1]
@@ -79,7 +79,7 @@ w_naranja_oscuro, h_naranja_oscuro = template_naranja_oscuro.shape[::-1]
 #Especificar un umbral (threshold)
 threshold= 0.92
 # Directorio con las imagenes averificar
-img_dir = '/Users/belindabrown/Desktop/Reconocimiento13/ImgAVerificar'
+img_dir = '/Users/belindabrown/Desktop/Reconocimiento13/Reconocimiento_Por_Imagenes/ImgAVerificar'
 data_path = os.path.join(img_dir,'*.jpg')
 files = glob.glob(data_path)
 data = []
@@ -165,9 +165,8 @@ for f1 in files:
 	location_naranja = np.where(res_naranja >= threshold)
 	location_naranja_oscuro = np.where(res_naranja_oscuro >= threshold)
 	###    SI HAY VERDE, ENTONCES...
-	# print("location verte tipo\n \n ", type(location_verde))
 	## VERDE ANTES DE FILTRADO para X - sin las repeticiones
-	if len(location_verde) != 0:
+	if len(location_verde[0]) > 0:
 		for iteradorloc0 in sorted(location_verde[0]):
 			if iteradorloc0 not in Verde_x:
 				Verde_x.append(iteradorloc0)
@@ -193,19 +192,19 @@ for f1 in files:
 		Y_Verde_Filtrado.append(y0)
 		#Para automatizar el filtrado se calcula las medidas de dispersion
 		X_media_arit_lista_re = media_arit_lista(Verde_x)
-		print("Media x Verde", X_media_arit_lista_re)
+		# print("Media x Verde", X_media_arit_lista_re)
 		X_varianza_lista_re = varianza_lista(Verde_x)
-		print("Varianza x Verde", X_varianza_lista_re)
+		# print("Varianza x Verde", X_varianza_lista_re)
 		X_desvacion_estandar_re = desvia_estan_lista(Verde_x)
-		print("Desviacion estandar x Verde", X_desvacion_estandar_re)
+		# print("Desviacion estandar x Verde", X_desvacion_estandar_re)
 		Y_media_arit_lista_re = media_arit_lista(Verde_y)
-		print("Media y Verde", Y_media_arit_lista_re)
+		# print("Media y Verde", Y_media_arit_lista_re)
 		Y_varianza_lista_re = varianza_lista(Verde_y)
-		print("Varianza y Verde", Y_varianza_lista_re)
+		# print("Varianza y Verde", Y_varianza_lista_re)
 		Y_desvacion_estandar_re = desvia_estan_lista(Verde_y)
-		print("Desviacion estandar y Verde", Y_desvacion_estandar_re)
-		print("Verde x completo ", Verde_x)
-		print('Verde y completo', Verde_y)
+		# print("Desviacion estandar y Verde", Y_desvacion_estandar_re)
+		# print("Verde x completo ", Verde_x)
+		# print('Verde y completo', Verde_y)
 
 		#Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
 		# Es decir 144,145,146 son 3 pixeles consecutivos por lo que dibujaría 3 rectangulos
@@ -213,9 +212,9 @@ for f1 in files:
 		#grupos es indiferente sino se obtiene la primera, dado que con la segundo cumple las necesidades.
 		for e, i in sorted(zip(Verde_x, X_Verde_antes_filrado)):
 			Resta_X_verde = i - e
-			print(i)
-			print(e)
-			print("Resta X Verde", Resta_X_verde, i)
+			# print(i)
+			# print(e)
+			# print("Resta X Verde", Resta_X_verde, i)
 			if X_desvacion_estandar_re < Resta_X_verde:
 				X_Verde_Filtrado.append(i)
 		X_Verde_Filtrado = list(OrderedDict.fromkeys(X_Verde_Filtrado))
@@ -225,9 +224,9 @@ for f1 in files:
 		#grupos es indiferente sino se obtiene la primera, dado que con la segundo cumple las necesidades.
 		for ee, ii in sorted(zip(Verde_y, Y_Verde_antes_filrado)):
 			Resta_Y_verde = ii - ee
-			print(ii)
-			print(ee)
-			print("Resta_Y_verde", Resta_Y_verde, ii)
+			# print(ii)
+			# print(ee)
+			# print("Resta_Y_verde", Resta_Y_verde, ii)
 			if Y_media_arit_lista_re - Y_desvacion_estandar_re < Resta_Y_verde:
 				Y_Verde_Filtrado.append(ii)
 		Y_Verde_Filtrado = list(OrderedDict.fromkeys(Y_Verde_Filtrado))
@@ -238,20 +237,20 @@ for f1 in files:
 		#esto y la estructura de los puertos.
 		n_X_Verde_nxnC = len(X_Verde_Filtrado)
 		n_Y_Verde_nxnC = len(Y_Verde_Filtrado)
-		print("n" , n_Y_Verde_nxnC)
-		print("nx", n_X_Verde_nxnC)
+		# print("n" , n_Y_Verde_nxnC)
+		# print("nx", n_X_Verde_nxnC)
 		contador = 0
 		while contador < n_Y_Verde_nxnC-1:
 			contador = contador +1
-			print(contador, X_Verde_Filtrado)
+			# print(contador, X_Verde_Filtrado)
 			if n_X_Verde_nxnC != n_Y_Verde_nxnC and n_X_Verde_nxnC < n_Y_Verde_nxnC:
 				X_Verde_Filtrado.append(x0)
-		print("X_Verde_Filtrado", X_Verde_Filtrado)
-		print("Y_Verde_Filtrado", Y_Verde_Filtrado)
+		# print("X_Verde_Filtrado", X_Verde_Filtrado)
+		# print("Y_Verde_Filtrado", Y_Verde_Filtrado)
 		###Uniendo las dos coordenadas x, y
 		Verdes_filtrados = sorted(zip(Y_Verde_Filtrado, X_Verde_Filtrado))
 		###imprime los puntos en (x,y)
-		print("Pares de coordenadas para punto Verde_filtrados ",Verdes_filtrados)
+		# print("Pares de coordenadas para punto Verde_filtrados ",Verdes_filtrados)
 		for ptVerde in Verdes_filtrados:
 		###dibuja el rectangulo en ese caso en donde encuentra verde
 		####cv2.rectangle(imagen en donde se dibuja, donde dibujar, color, grueso linea dibujo)
@@ -266,8 +265,7 @@ for f1 in files:
 	####zip () con n argumentos, entonces la función devolverá un iterador que genera tuplas de longitud n.
 
 	####    SI HAY amarillo naranja, ENTONCES...
-	elif len(location_naranja) !=0:
-
+	if len(location_naranja[0]) > 0:
 	## VERDE ANTES DE FILTRADO para X - sin las repeticiones
 		for iteradorloc00 in sorted(location_naranja[0]):
 			if iteradorloc00 not in AmarilloNaranja_x:
@@ -294,19 +292,19 @@ for f1 in files:
 		Y_AmarilloNaranja_Filtrado.append(y00)
 	####Para automatizar el filtrado se calcula las medidas de dispersion
 		X_media_arit_lista_AN = media_arit_lista(AmarilloNaranja_x)
-		print("Media de Amarillo Naranja X", X_media_arit_lista_AN)
+		# print("Media de Amarillo Naranja X", X_media_arit_lista_AN)
 		X_varianza_lista_AN = varianza_lista(AmarilloNaranja_x)
-		print("varianza Amarillo Naranja X", X_varianza_lista_AN)
+		# print("varianza Amarillo Naranja X", X_varianza_lista_AN)
 		X_desvacion_estandar_AN = desvia_estan_lista(AmarilloNaranja_x)
-		print("Desviación estándar Amarillo Naranja X", X_desvacion_estandar_AN)
+		# print("Desviación estándar Amarillo Naranja X", X_desvacion_estandar_AN)
 		Y_media_arit_lista_AN = media_arit_lista(AmarilloNaranja_y)
-		print("Media Amarillo Naranja Y", Y_media_arit_lista_AN)
+		# print("Media Amarillo Naranja Y", Y_media_arit_lista_AN)
 		Y_varianza_lista_AN = varianza_lista(AmarilloNaranja_y)
-		print("Varianza Amarillo Naranja Y", Y_varianza_lista_AN)
+		# print("Varianza Amarillo Naranja Y", Y_varianza_lista_AN)
 		Y_desvacion_estandar_AN = desvia_estan_lista(AmarilloNaranja_y)
-		print("Desviación estandar Amarillo Naranja Y", Y_desvacion_estandar_AN)
-		print("Amarillo Naranja x completo ", AmarilloNaranja_x)
-		print('Amarillo Naranja y completo', AmarilloNaranja_y)
+		# print("Desviación estandar Amarillo Naranja Y", Y_desvacion_estandar_AN)
+		# print("Amarillo Naranja x completo ", AmarilloNaranja_x)
+		# print('Amarillo Naranja y completo', AmarilloNaranja_y)
 
 	####Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
 	### Es decir 144,145,146 son 3 pixeles consecutivos por lo que dibujaría 3 rectangulos
@@ -314,9 +312,9 @@ for f1 in files:
 	###grupos es indiferente sino se obtiene la primera, dado que con la segundo cumple las necesidades.
 		for eee,iii in sorted(zip(AmarilloNaranja_x,X_AmarilloNaranja_antes_filrado)):
 			Resta_X_AN = iii - eee
-			print(iii)
-			print(eee)
-			print("Resta x Amarillo Naranja", Resta_X_AN, iii)
+			# print(iii)
+			# print(eee)
+			# print("Resta x Amarillo Naranja", Resta_X_AN, iii)
 			if X_desvacion_estandar_AN<Resta_X_AN:
 				X_AmarilloNaranja_Filtrado.append(iii)
 		X_AmarilloNaranja_Filtrado = list(OrderedDict.fromkeys(X_AmarilloNaranja_Filtrado))    #Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
@@ -326,9 +324,9 @@ for f1 in files:
 
 		for eeee,iiii in sorted(zip(AmarilloNaranja_y,Y_AmarilloNaranja_antes_filrado)):
 			Resta_Y_AN = iiii - eeee
-			print(iiii)
-			print(eeee)
-			print("Resta y Amarillo Naranja ", Resta_Y_AN, iiii)
+			# print(iiii)
+			# print(eeee)
+			# print("Resta y Amarillo Naranja ", Resta_Y_AN, iiii)
 			if Y_media_arit_lista_AN - Y_desvacion_estandar_AN < Resta_Y_AN:
 				Y_AmarilloNaranja_Filtrado.append(iiii)
 		Y_AmarilloNaranja_Filtrado = list(OrderedDict.fromkeys(Y_AmarilloNaranja_Filtrado))    #Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
@@ -336,24 +334,24 @@ for f1 in files:
 	#####Considerando la logica de filtrado y la arquitectura a nivel de puertos en el commutador
 	####Sabemos que dadas les especificaciones necesarias, puede existir un angulo de desviacion, considerando
 	#####esto y la estructura de los puertos.
-		n_X_AN_nxnC = len(X_AN_Filtrado)
-		n_Y_AN_nxnC = len(Y_AN_Filtrado)
+		n_X_AN_nxnC = len(X_AmarilloNaranja_Filtrado)
+		n_Y_AN_nxnC = len(Y_AmarilloNaranja_Filtrado)
 		contadorAN = 0
 		while contadorAN < n_Y_AN_nxnC-1 :
 			contadorAN = contadorAN +1
-			print(contadorAN, X_AmarilloNaranja_Filtrado)
+			# print(contadorAN, X_AmarilloNaranja_Filtrado)
 			if n_X_AN_nxnC != n_Y_AN_nxnC and n_X_AN_nxnC < n_Y_AN_nxnC:
-				X_AN_Filtrado.append(x00)
+				X_AmarilloNaranja_Filtrado.append(x00)
 
 
-		print("X_AN_Filtrado", X_AmarilloNaranja_Filtrado)
-		print("Y_AN_Filtrado", Y_AmarilloNaranja_Filtrado)
+		# print("X_AN_Filtrado", X_AmarilloNaranja_Filtrado)
+		# print("Y_AN_Filtrado", Y_AmarilloNaranja_Filtrado)
 
 	####Uniendo las dos coordenadas x, y
 		AmarilloNaranja_filtrados = sorted(zip(Y_AmarilloNaranja_Filtrado, X_AmarilloNaranja_Filtrado ))
 
 	#####imprime los puntos en (x,y)
-		print("Pares de coordenadas para punto Amarillo Naranja Filtradas ",AmarilloNaranja_filtrados)
+		# print("Pares de coordenadas para punto Amarillo Naranja Filtradas ",AmarilloNaranja_filtrados)
 		#Dibujar un rectángulo alrededor de la región adaptada encontrada en este caso naranja
 		for ptAN in AmarilloNaranja_filtrados:
 			#dibuja el rectangul        #color BGR
@@ -364,7 +362,7 @@ for f1 in files:
 			Cantidad_Leds_AmarilloNaranja = Cantidad_Leds_AmarilloNaranja +1
 		print("La cantidad de LEDs en estado Amarillo Naranja encontrados es de:      ", Cantidad_Leds_AmarilloNaranja)
 	####    SI HAY naranja naranja, ENTONCES...
-	elif len(location_naranja_oscuro) != 0:
+	if len(location_naranja_oscuro[0]) > 0:
 	#####Naranja Naranja ANTES DE FILTRADO para X - sin las repeticiones
 		for iteradorloc000 in sorted(location_naranja_oscuro[0]):
 			if iteradorloc000 not in NaranjaNaranja_x:
@@ -391,19 +389,19 @@ for f1 in files:
 		Y_NaranjaNaranja_Filtrado.append(y000)
 	####Para automatizar el filtrado se calcula las medidas de dispersion
 		X_media_arit_lista_NN = media_arit_lista(NaranjaNaranja_x)
-		print("Media de Naranja Naranja X", X_media_arit_lista_NN)
+		# print("Media de Naranja Naranja X", X_media_arit_lista_NN)
 		X_varianza_lista_NN = varianza_lista(NaranjaNaranja_x)
-		print("Varianza Naranja Naranja X", X_varianza_lista_NN)
-		X_desvacion_estandar_AN = desvia_estan_lista(AmarilloNaranja_x)
-		print("Desviación estándar Naranja Naranja X", X_desvacion_estandar_NN)
+		# print("Varianza Naranja Naranja X", X_varianza_lista_NN)
+		X_desvacion_estandar_NN = desvia_estan_lista(NaranjaNaranja_x)
+		# print("Desviación estándar Naranja Naranja X", X_desvacion_estandar_NN)
 		Y_media_arit_lista_NN = media_arit_lista(NaranjaNaranja_y)
-		print("Media Naranja Naranja Y", Y_media_arit_lista_NN)
+		# print("Media Naranja Naranja Y", Y_media_arit_lista_NN)
 		Y_varianza_lista_NN = varianza_lista(NaranjaNaranja_y)
-		print("Varianza Naranja Naranja Y", Y_varianza_lista_NN)
+		# print("Varianza Naranja Naranja Y", Y_varianza_lista_NN)
 		Y_desvacion_estandar_NN = desvia_estan_lista(NaranjaNaranja_y)
-		print("Desviación estandar Naranja Naranja Y", Y_desvacion_estandar_NN)
-		print("Naranja Naranja x completo ",  NaranjaNaranja_x)
-		print('Naranja Naranja y completo', NaranjaNaranja_y)
+		# print("Desviación estandar Naranja Naranja Y", Y_desvacion_estandar_NN)
+		# print("Naranja Naranja x completo ",  NaranjaNaranja_x)
+		# print('Naranja Naranja y completo', NaranjaNaranja_y)
 
 	#####Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
 	###Es decir 144,145,146 son 3 pixeles consecutivos por lo que dibujaría 3 rectangulos
@@ -411,9 +409,9 @@ for f1 in files:
 	####grupos es indiferente sino se obtiene la primera, dado que con la segundo cumple las necesidades.
 		for nne,nni in sorted(zip(NaranjaNaranja_x,X_NaranjaNaranja_antes_filrado)):
 			Resta_X_NN = nni - nne
-			print(nni)
-			print(nne)
-			print("Resta x Naranja Naranja", Resta_X_NN, nni)
+			# print(nni)
+			# print(nne)
+			# print("Resta x Naranja Naranja", Resta_X_NN, nni)
 			if X_desvacion_estandar_NN<Resta_X_NN:
 				X_NaranjaNaranja_Filtrado.append(nni)
 		X_NaranjaNaranja_Filtrado = list(OrderedDict.fromkeys(X_NaranjaNaranja_Filtrado))    #Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
@@ -423,9 +421,9 @@ for f1 in files:
 
 		for nnee,nnii in sorted(zip(NaranjaNaranja_y,Y_NaranjaNaranja_antes_filrado)):
 			Resta_Y_NN = nnii - nnee
-			print(nnii)
-			print(nnee)
-			print("Resta y Naranja Naranja ", Resta_Y_NN, nnii)
+			# print(nnii)
+			# print(nnee)
+			# print("Resta y Naranja Naranja ", Resta_Y_NN, nnii)
 			if Y_media_arit_lista_NN - Y_desvacion_estandar_NN < Resta_Y_NN:
 				Y_NaranjaNaranja_Filtrado.append(nnii)
 		Y_NaranjaNaranja_Filtrado = list(OrderedDict.fromkeys(Y_NaranjaNaranja_Filtrado))    #Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
@@ -433,24 +431,24 @@ for f1 in files:
 	###Considerando la logica de filtrado y la arquitectura a nivel de puertos en el commutador
 	####Sabemos que dadas les especificaciones necesarias, puede existir un angulo de desviacion, considerando
 	###esto y la estructura de los puertos.
-		n_X_NN_nxnC = len(X_NN_Filtrado)
-		n_Y_NN_nxnC = len(Y_NN_Filtrado)
+		n_X_NN_nxnC = len(X_NaranjaNaranja_Filtrado)
+		n_Y_NN_nxnC = len(Y_NaranjaNaranja_Filtrado)
 		contadorNN = 0
 		while contadorNN < n_Y_NN_nxnC-1 :
 			contadorNN = contadorNN +1
-			print(contadorNN, X_NaranjaNaranja_Filtrado)
+			# print(contadorNN, X_NaranjaNaranja_Filtrado)
 			if n_X_NN_nxnC != n_Y_NN_nxnC and n_X_NN_nxnC < n_Y_NN_nxnC:
-				X_NN_Filtrado.append(x000)
+				X_NaranjaNaranja_Filtrado.append(x000)
 
 
-		print("X_NN_Filtrado", X_NaranjaNaranja_Filtrado)
-		print("Y_NN_Filtrado", Y_NaranjaNaranja_Filtrado)
+		# print("X_NN_Filtrado", X_NaranjaNaranja_Filtrado)
+		# print("Y_NN_Filtrado", Y_NaranjaNaranja_Filtrado)
 
 	#Uniendo las dos coordenadas x, y
 		NaranjaNaranja_filtrados = sorted(zip(Y_NaranjaNaranja_Filtrado, X_NaranjaNaranja_Filtrado))
 
 	###imprime los puntos en (x,y)
-		print("Pares de coordenadas para punto Naranja Naranja Filtradas ",NaranjaNaranja_filtrados)
+		# print("Pares de coordenadas para punto Naranja Naranja Filtradas ",NaranjaNaranja_filtrados)
 		####Dibujar un rectángulo alrededor de la región adaptada encontrada en este caso naranja oscuro
 		for ptNN in NaranjaNaranja_filtrados:
 			####dibuja el rectángulo        #color BGR
@@ -458,9 +456,11 @@ for f1 in files:
 			####En esta funcion el color va BGR, lo que hace es poner el texto donde encontró el led
 			cv2.putText(img, 'NARANJA NARANJA', ptNN, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 1)
 			###Imprime la cantidad de leds encontrados
+			Cantidad_Leds_NaranjaNaranja = Cantidad_Leds_NaranjaNaranja + 1
 		print("La cantidad de LEDs en estado Naranja Naranja encontrados es de:      ", Cantidad_Leds_NaranjaNaranja)
+
 	####me muestra la figura ya analizada
-	cv2.imshow("Detectado",img)
+	cv2.imshow("Imagen Procesada",img)
 	###dado que son varias se espera hasta que presione una tecla y así analiza
 	###la otra imagen
 	cv2.waitKey(0)
