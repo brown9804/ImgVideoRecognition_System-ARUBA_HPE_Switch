@@ -260,7 +260,7 @@ for f1 in files:
 			cv2.putText(img, 'VERDE', ptVerde, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 1)
 		###Contar la cantidad de leds que encontró en este estado
 			Cantidad_Leds_Verde = Cantidad_Leds_Verde +1
-		print("La cantidad de LEDs en estado Verde encontrados es de:      ", Cantidad_Leds_Verde)
+		print("La cantidad de LEDs en estado Verde Verde (encendido/encendido) encontrados es de:      ", Cantidad_Leds_Verde)
 	######zip location devuleve  ejemplo:  <zip object at 0x11cf638c0> empacate y accede
 	####zip () con n argumentos, entonces la función devolverá un iterador que genera tuplas de longitud n.
 
@@ -360,7 +360,7 @@ for f1 in files:
 			cv2.putText(img, 'NARANJA', ptAN, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 1)
 			#Contar la cantidad de leds que encontró en este estado
 			Cantidad_Leds_AmarilloNaranja = Cantidad_Leds_AmarilloNaranja +1
-		print("La cantidad de LEDs en estado Amarillo Naranja encontrados es de:      ", Cantidad_Leds_AmarilloNaranja)
+		print("La cantidad de LEDs en estado Amarillo Naranja (encendido/problema) encontrados es de:      ", Cantidad_Leds_AmarilloNaranja)
 	####    SI HAY naranja naranja, ENTONCES...
 	if len(location_naranja_oscuro[0]) > 0:
 	#####Naranja Naranja ANTES DE FILTRADO para X - sin las repeticiones
@@ -457,7 +457,7 @@ for f1 in files:
 			cv2.putText(img, 'NARANJA NARANJA', ptNN, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 1)
 			###Imprime la cantidad de leds encontrados
 			Cantidad_Leds_NaranjaNaranja = Cantidad_Leds_NaranjaNaranja + 1
-		print("La cantidad de LEDs en estado Naranja Naranja encontrados es de:      ", Cantidad_Leds_NaranjaNaranja)
+		print("La cantidad de LEDs en estado Naranja Naranja (problema/problema) encontrados es de:      ", Cantidad_Leds_NaranjaNaranja)
 
 	####me muestra la figura ya analizada
 	cv2.imshow("Imagen Procesada",img)
