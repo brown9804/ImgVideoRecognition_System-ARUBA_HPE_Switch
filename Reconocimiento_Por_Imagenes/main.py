@@ -317,7 +317,8 @@ for f1 in files:
 			# print("Resta x Amarillo Naranja", Resta_X_AN, iii)
 			if X_desvacion_estandar_AN<Resta_X_AN:
 				X_AmarilloNaranja_Filtrado.append(iii)
-		X_AmarilloNaranja_Filtrado = list(OrderedDict.fromkeys(X_AmarilloNaranja_Filtrado))    #Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
+		X_AmarilloNaranja_Filtrado = list(OrderedDict.fromkeys(X_AmarilloNaranja_Filtrado))    
+		#Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
 	#### Es decir 1678,1679,1680 son 3 pixeles consecutivos por lo que dibujaría 3 rectangulos
 	####Entonces por grupo de datos similares necesitamos una coordenada. Dado que no cambian tanto entre
 	####grupos es indiferente sino se obtiene la primera, dado que con la segundo cumple las necesidades.
@@ -329,7 +330,8 @@ for f1 in files:
 			# print("Resta y Amarillo Naranja ", Resta_Y_AN, iiii)
 			if Y_media_arit_lista_AN - Y_desvacion_estandar_AN < Resta_Y_AN:
 				Y_AmarilloNaranja_Filtrado.append(iiii)
-		Y_AmarilloNaranja_Filtrado = list(OrderedDict.fromkeys(Y_AmarilloNaranja_Filtrado))    #Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
+		Y_AmarilloNaranja_Filtrado = list(OrderedDict.fromkeys(Y_AmarilloNaranja_Filtrado))    
+		#Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
 	####Ahora para poderlo ordenar otra vez en coordenadas necesitamos un arreglo nxn
 	#####Considerando la logica de filtrado y la arquitectura a nivel de puertos en el commutador
 	####Sabemos que dadas les especificaciones necesarias, puede existir un angulo de desviacion, considerando
@@ -414,7 +416,8 @@ for f1 in files:
 			# print("Resta x Naranja Naranja", Resta_X_NN, nni)
 			if X_desvacion_estandar_NN<Resta_X_NN:
 				X_NaranjaNaranja_Filtrado.append(nni)
-		X_NaranjaNaranja_Filtrado = list(OrderedDict.fromkeys(X_NaranjaNaranja_Filtrado))    #Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
+		X_NaranjaNaranja_Filtrado = list(OrderedDict.fromkeys(X_NaranjaNaranja_Filtrado))    
+		#Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
 	####Es decir 1678,1679,1680 son 3 pixeles consecutivos por lo que dibujaría 3 rectangulos
 	#####Entonces por grupo de datos similares necesitamos una coordenada. Dado que no cambian tanto entre
 	####grupos es indiferente sino se obtiene la primera, dado que con la segundo cumple las necesidades.
@@ -426,7 +429,8 @@ for f1 in files:
 			# print("Resta y Naranja Naranja ", Resta_Y_NN, nnii)
 			if Y_media_arit_lista_NN - Y_desvacion_estandar_NN < Resta_Y_NN:
 				Y_NaranjaNaranja_Filtrado.append(nnii)
-		Y_NaranjaNaranja_Filtrado = list(OrderedDict.fromkeys(Y_NaranjaNaranja_Filtrado))    #Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
+		Y_NaranjaNaranja_Filtrado = list(OrderedDict.fromkeys(Y_NaranjaNaranja_Filtrado))    
+		#Filtro para la coordenada X, debido que localiza pixeles con umbral similar en la zona cerca
 	####Ahora para poderlo ordenar otra vez en coordenadas necesitamos un arreglo nxn
 	###Considerando la logica de filtrado y la arquitectura a nivel de puertos en el commutador
 	####Sabemos que dadas les especificaciones necesarias, puede existir un angulo de desviacion, considerando
