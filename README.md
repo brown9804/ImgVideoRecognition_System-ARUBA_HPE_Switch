@@ -5,3 +5,4 @@ The main objective is to develop an algorithm using Python and other tools such 
 review of the LEDs of a switch using a video stream - images - video.
 
 Each folder contains a different analysis and the media files used for tests of correct operation were added to the repositor.
+If you want to find more documentation, within each stage of it you will find a folder named as docs where you will find the user guide and one for the developer.
