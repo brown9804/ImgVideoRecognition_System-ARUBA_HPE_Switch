@@ -141,7 +141,7 @@ res_matching_green = cv2.matchTemplate (img_gray, template_green, cv2.TM_CCOEFF_
 ~~~~~
 
 ~~~~
-	###### Gets the position
+###### Gets the position
 	location_green = np.where(res_matching_green >= threshold)
 ~~~~~
 
