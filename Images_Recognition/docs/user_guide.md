@@ -246,4 +246,9 @@ if len(location_green[0]) > 0:
 		Quantity_Leds_Green = Quantity_Leds_Green +1
 	print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
 ```
+2. Threshold adjustment: Run the program and check if it identifies well, if not adjust the threshold. It is currently at 0.92 remembering that its value is in a range between 0 - 1, the closer it is to the more accurate it is.
 
+~~~
+######	Specifying (threshold)
+threshold= 0.92
+~~~
