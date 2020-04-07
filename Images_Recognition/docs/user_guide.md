@@ -55,7 +55,11 @@ If we consider the example that has been used, it would be as follows:
 
 Locating ourselves in the location / Users / belindabrown / Desktop / Folder1 / Images_Recognition
 
-Your computer will rename what comes before the $ in my case it is ~~~~~ Belindas-MacBook-Air: Images_Recognition belindabrown $ ~~~~~ , so it would look like this.
+Your computer will rename what comes before the $ in my case it is: 
+~~~~~ 
+Belindas-MacBook-Air: Images_Recognition belindabrown $ 
+~~~~~ 
+So it would look like this.
 
 ~~~~~
 Belindas-MacBook-Air: Images_Recognition belindabrown $ python3 main.py
