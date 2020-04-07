@@ -108,7 +108,7 @@ A few seconds later it is shown depending on the cases and the number of LEDs th
 ## Settings
 If we consider the development algorithm, at the recognition level several changes can be made:
 
-**1. Change of the object or objects to recognize**
+**1. Change of the object or objects to recognize:**
 
     **1.1 Template is modified**  Once it has been decided which objects are going to be identified, these images are stored in an exclusive folder for templates, these images throughout the code are called as templates.
     
@@ -246,9 +246,20 @@ if len(location_green[0]) > 0:
 		Quantity_Leds_Green = Quantity_Leds_Green +1
 	print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
 ```
-2. Threshold adjustment: Run the program and check if it identifies well, if not adjust the threshold. It is currently at 0.92 remembering that its value is in a range between 0 - 1, the closer it is to the more accurate it is.
+**2. Threshold adjustment:** Run the program and check if it identifies well, if not adjust the threshold. It is currently at 0.92 remembering that its value is in a range between 0 - 1, the closer it is to the more accurate it is.
 
 ~~~
 ######	Specifying (threshold)
 threshold= 0.92
 ~~~
+
+**3. Modifications to the image**
+
+**3.1. Text (recognized object tags):** can modify the format of the text which is added in the image, for the previous cases we have GREEN, YELLOW ORANGE, ORANGE, these labels that are added on the image have a format of color, letter, and line thickness.
+	
+~~~
+###	In this function the color goes BGR, what it does is put the text where it found the led
+	cv2.putText(img, 'GREEN', ptGreen, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
+~~~
+Where following the order in which the syntax of `cv2.putTex ()` is found, it follows that the parameters correspond to the following: ` (image where it will be drawn, text to add, recognized pixel of the template to identify, font , font scale, color (BGR), thickness of the line)`
+
