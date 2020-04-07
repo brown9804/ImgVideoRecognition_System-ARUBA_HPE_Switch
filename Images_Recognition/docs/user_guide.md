@@ -109,8 +109,11 @@ A few seconds later it is shown depending on the cases and the number of LEDs th
 If we consider the development algorithm, at the recognition level several changes can be made:
 
 **1. Change of the object or objects to recognize**
-    **1.1 Template is modified** Once it has been decided which objects are going to be identified, these images are stored in an exclusive folder for templates, these images throughout the code are called as templates.
+
+    **1.1 Template is modified**  Once it has been decided which objects are going to be identified, these images are stored in an exclusive folder for templates, these images throughout the code are called as templates.
+    
     **1.2 Modify images to verify** If you want to change what is identified in the images, it is recommended to store all the images in a folder first. Following the recognition model present in this section.
+    
     **1.3 Quantity of objects**
 The number of objects it identifies are 3 (different states), but if you want to increase or decrease the number of items, the idea would be to eliminate or add, whatever the case may be, a complete block contemplating the instructions provided. That is, you can guide yourself by looking at what elements the GREE object contains and thus identifying what belongs to it.
 
@@ -129,14 +132,13 @@ Y_Green_Filtered = []
 Green_filtered_co ordinate = []
 ###### Number of LEDs in state # XXX
 Quantity_Leds_Green = 0
+~~~~~
 
 
 ~~~~~
 ######## COMPARING THE IMAGE USING TEMPLATE METHOD ########
 res_matching_green = cv2.matchTemplate (img_gray, template_green, cv2.TM_CCOEFF_NORMED)
-
 ~~~~~
-
 
 ~~~~
 	###### Gets the position
@@ -144,8 +146,7 @@ res_matching_green = cv2.matchTemplate (img_gray, template_green, cv2.TM_CCOEFF_
 ~~~~~
 
 
-~~~
-							########## IF THERE IS GREEN THEN ... ##########
+~~~							########## IF THERE IS GREEN THEN ... ##########
 	####### GREEN BEFORE FILTERING for X - without repeats
 	if len(location_green[0]) > 0:
 		for itergreenx in sorted(location_green[0]):
@@ -244,6 +245,5 @@ res_matching_green = cv2.matchTemplate (img_gray, template_green, cv2.TM_CCOEFF_
 			##### 	Count the number of LEDs you found in this state
 			Quantity_Leds_Green = Quantity_Leds_Green +1
 		print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
-
 ~~~~~
 
