@@ -9,6 +9,8 @@ Python 3.7.7
 
 Numpy 1.15.2
 
+The images used for the analysis are in .jpg format
+
 ----------
 
 
@@ -68,5 +70,39 @@ Belindas-MacBook-Air: Images_Recognition belindabrown $ python3 main.py
 ~~~~~
 
 ### Results
+
+It is necessary to contemplate that given the way in which the problem was posed, the analyzed image and its qualitative characteristics are displayed in IDLE, also, in the terminal the quantitative description of its properties is shown.
+
+
+**1. Terminal Results**
+
+Depending on what the image contains, different results will be obtained, which present a format like the following after following the **3. Algorithm execution** instruction:
+
+~~~~~
+/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/2OrangeOrange.jpg
+Image loaded, analyzing patterns ...
+The number of LEDs in Orange Orange status (problem / problem) found is: 2 
+
+/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/1YellowOrange.jpg
+Image loaded, analyzing patterns ...
+The number of LEDs in Yellow Orange state (on / problem) found is: 1 
+
+/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/5Green.jpg
+Image loaded, analyzing patterns ...
+The number of LEDs in Green Green status (on / on) found is: 5 
+
+/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/1Mixed.jpg
+Image loaded, analyzing patterns ...
+The number of LEDs in Green Green status (on / on) found is: 1
+The number of LEDs in Yellow Orange state (on / problem) found is: 1
+The number of LEDs in Orange Orange status (problem / problem) found is: 1 
+
+~~~~~
+
+**2. Shown in Python IDLE**
+
+A few seconds later it is shown depending on the cases and the number of LEDs that are lit, a window will be displayed with an analyzed image, to analyze the next image press any key.
+
+**Note:** If a zoomed image is displayed, consider double-clicking on the top bar of the window in order for the image to readjust.
 
 ## Settings
