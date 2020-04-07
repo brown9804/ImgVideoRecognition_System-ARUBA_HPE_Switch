@@ -71,9 +71,9 @@ def StandarDesv(list):
 
 
 ######	Read the template
-template_green = cv2.imread('/Users/belindabrown/Desktop/Folder1/Images_Recognition/Templates/ledGreen.jpg',0)
-template_orange = cv2.imread('/Users/belindabrown/Desktop/Folder1/Images_Recognition/Templates/ledOrange.jpg',0)
-template_dark_orange = cv2.imread('/Users/belindabrown/Desktop/Folder1/Images_Recognition/Templates/ledDarkOrange.jpg',0)
+template_green = cv2.imread('',0)
+template_orange = cv2.imread('',0)
+template_dark_orange = cv2.imread('',0)
 
 ######	Store the width (w) and height (h) of the template
 w_green, h_green = template_green.shape[::-1]
@@ -83,7 +83,7 @@ w_dark_orange, h_dark_orange = template_dark_orange.shape[::-1]
 ######	Specifying (threshold)
 threshold= 0.92
 ######	Directory with images verify
-img_dir = '/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify'
+img_dir = ''
 data_path = os.path.join(img_dir,'*.jpg')
 files = glob.glob(data_path)
 data = []
