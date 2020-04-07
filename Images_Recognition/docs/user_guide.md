@@ -29,6 +29,7 @@ template_dark_orange = cv2.imread ('', 0)
 ~~~~~
 
 You must enter the address corresponding to your machine in parentheses, for example:
+
 /Users/belindabrown/Desktop/Folder1/Images_Recognition/Templates/ledOrange.jpg
 
 **2. Change in location of images to verify**
@@ -41,6 +42,7 @@ img_dir = ''
 ~~~~~
 
 You must enter the address corresponding to your machine in parentheses, for example:
+
 / Users / belindabrown / Desktop / Folder1 / Images_Recognition / ImgtoVerify
 
 **3. Algorithm execution**
