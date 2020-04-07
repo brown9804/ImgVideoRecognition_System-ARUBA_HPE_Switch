@@ -6,7 +6,6 @@ import cv2
 import numpy as np
 import glob
 import os
-from PIL import Image
 from collections import OrderedDict
 
 ##########  			DEFINITIONS OF NECESSARY FUNCTIONS   			##########
