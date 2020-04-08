@@ -209,7 +209,7 @@ for f1 in files:
 				X_Green_Filtered.append(xGreen0)
 		######		Joining the two x, y coordinates
 		Green_filtered_coordenates = sorted(zip(Y_Green_Filtered, X_Green_Filtered))
-		###### 	Draw the rectangle in that case where it finds green
+		###### 	Draw the rectangle and label in that case where it finds green
 		for ptGreen in Green_filtered_coordenates:
 			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
 			cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255,255), 4)
@@ -275,10 +275,10 @@ for f1 in files:
 				X_YellowOrange_Filtered.append(xYellowOrang0)
 		######		Joining the two x, y coordinates
 		YellowOrange_filtered_coordenates = sorted(zip(Y_YellowOrange_Filtered, X_YellowOrange_Filtered ))
-		###### 	Draw the rectangle in that case where it finds yellow orange
+		###### 	Draw the rectangle and label in that case where it finds yellow orange
 		for ptYellowOrange in YellowOrange_filtered_coordenates:
-			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
 			#Draw a rectangle around the adapted region found in this case
+			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
 			cv2.rectangle(img, ptYellowOrange, (ptYellowOrange[0] + w_orange, ptYellowOrange[1] + h_orange), (0,255,255), 4)
 			###	In this function the color goes BGR, what it does is put the text where it found the led
 			cv2.putText(img, 'ORANGE', ptYellowOrange, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
@@ -342,10 +342,10 @@ for f1 in files:
 				X_OrangeOrange_Filtered.append(xOrangOrang0)
 		######		Joining the two x, y coordinates
 		OrangeOrange_filtered_coordenates = sorted(zip(Y_OrangeOrange_Filtered, X_OrangeOrange_Filtered))
-		###### 	Draw the rectangle in that case where it finds orange orange
+		###### 	Draw the rectangle and label in that case where it finds orange orange
 		for ptOrangOrang in OrangeOrange_filtered_coordenates:
-			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
 			#Draw a rectangle around the adapted region found in this case
+			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
 			cv2.rectangle(img, ptOrangOrang, (ptOrangOrang[0] + w_dark_orange, ptOrangOrang[1] + h_dark_orange), (0,255,255), 4)
 			###	In this function the color goes BGR, what it does is put the text where it found the led
 			cv2.putText(img, 'DARK ORANGE', ptOrangOrang, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
