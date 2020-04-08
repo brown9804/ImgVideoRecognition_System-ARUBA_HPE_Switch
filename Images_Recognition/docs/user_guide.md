@@ -171,56 +171,35 @@ if len(location_green[0]) > 0:
 	Y_Green_before_filtered.pop(0)
 	######	The deleted coordinate is added to the result
 	Y_Green_Filtered.append(yGreen0)
-	#####	To automate the filtering, the dispersion measurements are calculated
+	#####	To automate the filtering, the dispersion MEASUREMENTSmeasurements are calculated
+	#For X
 	X_ArithmeticAverage_Green = ArithmeticAveragelist(Geen_x)
-	# print("Arithmetic Average x Green", X_ArithmeticAverage_Green)
 	X_Variance_Green = variance_list(Geen_x)
-	# print("Variance x Green", X_Variance_Green)
 	X_StandarDesv_Green = StandarDesv(Geen_x)
-	# print("Standard Desvx Green", X_StandarDesv_Green)
+	#For Y
 	Y_ArithmeticAverage_Green = ArithmeticAveragelist(Green_y)
-	# print("Arithmetic Average y Green", Y_ArithmeticAverage_Green)
 	Y_Variance_Green = variance_list(Green_y)
-	# print("Variance y Green", Y_Variance_Green)
 	Y_StandarDesv_Green = StandarDesv(Green_y)
-	# print("Standard Desv y Verde", Y_StandarDesv_Green)
-	# print("Green x complete ", Geen_x)
-	# print('Green y complete', Green_y)
-	########## 		GREEN	COORDENATES FILTERS  	##########
-	#Filter for X coordinate, because it locates pixels with similar threshold in the near area
-	# That is to say 1678,1679,1680 are 3 consecutive pixels so I would draw 3 rectangles
-	#Then for a group of similar data we need a coordinate. Since they don't change as much between
-	#groups is indifferent if the first one is not obtained, since the second meets the needs.
+	########## 		GREEN	COORDENATES FILTERS ONE FOR LOCATION 	##########
+	#For green X
 	for e, i in sorted(zip(Geen_x, X_Green_before_filtered)):
+		#Difference between x coordinates
 		Diff_X_Green = i - e
-		# print(i)
-		# print(e)
-		# print("Diff x Green ", Diff_X_Green, i)
 		if X_StandarDesv_Green < Diff_X_Green:
 			X_Green_Filtered.append(i)
 	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
-	# Filter for the Y coordinate, because it locates pixels with a similar threshold in the near area
-	# That is,  144,145,146  are 3 consecutive pixels, so I would draw 3 rectangles
-	# Then for a group of similar data we need a coordinate. Since they don't change as much between
-	# groups is indifferent if the first is not obtained, given that the second meets the needs.
+	# Filter green y
 	for ee, ii in sorted(zip(Green_y, Y_Green_before_filtered)):
+		#Difference between y coordinates
 		Diff_Y_Green = ii - ee
-		# print(ii)
-		# print(ee)
-		# print("Diff_Y_Green", Diff_Y_Green, ii)
 		if Y_ArithmeticAverage_Green - Y_StandarDesv_Green < Diff_Y_Green:
 			Y_Green_Filtered.append(ii)
 	Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
-	#### Filter for the X coordinate, because it locates pixels with a similar threshold in the near area
-	#### Now to be able to order it again in coordinates we need an nxn array
-	#### Considering the filtering logic and the architecture at the port level in the switch
-	#### We know that given the necessary specifications, there may be a deviation angle, considering
-	##### this and the structure of the ports.
+	#Counting the number of pixels each coordinate 
 	number_X_Green = len(X_Green_Filtered)
 	number_Y_Green = len(Y_Green_Filtered)
-	# print("ny" , number_Y_Green)
-	# print("nx", number_X_Green)
 	HowManyGreen = 0
+	#Equalizing in order the number of pixels Y
 	while HowManyGreen < number_Y_Green-1:
 		HowManyGreen = HowManyGreen +1
 		# print(HowManyGreen, X_Green_Filtered)
@@ -230,14 +209,9 @@ if len(location_green[0]) > 0:
 	# print("Y_Green_Filtered", Y_Green_Filtered)
 	######		Joining the two x, y coordinates
 	Green_filtered_coordenates = sorted(zip(Y_Green_Filtered, X_Green_Filtered))
-	######	zip location return  example:  <zip object at 0x11cf638c0> pack and acces
-	####	zip () con n arguments, then the function will return an iterator that generates tuples of length n.
-	#####	Print points as (x,y)
-	# print(" Coordinate pairs for Green_filtered point ",Green_filtered_coordenates)
-	###### 	Draw the rectangle in that case where it finds green
+	###### 	Draw the rectangle and label in that case where it finds green
 	for ptGreen in Green_filtered_coordenates:
-		####	cv2.rectangle(image where draw, place , color, thick line drawing)
-		###		color BGR
+		####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
 		cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255,255), 4)
 		###	In this function the color goes BGR, what it does is put the text where it found the led
 		cv2.putText(img, 'GREEN', ptGreen, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
