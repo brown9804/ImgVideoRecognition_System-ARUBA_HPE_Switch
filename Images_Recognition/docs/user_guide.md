@@ -110,12 +110,11 @@ If we consider the development algorithm, at the recognition level several chang
 
 **1. Change of the object or objects to recognize:**
 
-    **1.1 Template is modified**  Once it has been decided which objects are going to be identified, these images are stored in an exclusive folder for templates, these images throughout the code are called as templates.
+    **1.1 Template is modified:**  Once it has been decided which objects are going to be identified, these images are stored in an exclusive folder for templates, these images throughout the code are called as templates.
     
-    **1.2 Modify images to verify** If you want to change what is identified in the images, it is recommended to store all the images in a folder first. Following the recognition model present in this section.
+    **1.2 Modify images to verify:** If you want to change what is identified in the images, it is recommended to store all the images in a folder first. Following the recognition model present in this section.
     
-    **1.3 Quantity of objects**
-The number of objects it identifies are 3 (different states), but if you want to increase or decrease the number of items, the idea would be to eliminate or add, whatever the case may be, a complete block contemplating the instructions provided. That is, you can guide yourself by looking at what elements the GREE object contains and thus identifying what belongs to it.
+    **1.3 Quantity of objects:** The number of objects it identifies are 3 (different states), but if you want to increase or decrease the number of items, the idea would be to eliminate or add, whatever the case may be, a complete block contemplating the instructions provided. That is, you can guide yourself by looking at what elements the GREE object contains and thus identifying what belongs to it.
 
 ~~~~~
 ######## FOR GREEN ######
