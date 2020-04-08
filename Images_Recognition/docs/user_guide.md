@@ -261,5 +261,35 @@ threshold= 0.92
 ###	In this function the color goes BGR, what it does is put the text where it found the led
 	cv2.putText(img, 'GREEN', ptGreen, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
 ~~~
-Where following the order in which the syntax of `cv2.putTex ()` is found, it follows that the parameters correspond to the following: ` (image where it will be drawn, text to add, recognized pixel of the template to identify, font , font scale, color (BGR), thickness of the line)`
 
+Where following the order in which the syntax of `cv2.putTex ()` is found, it follows that the parameters correspond to the following: `image where it will be drawn, text to add, recognized pixel of the template to identify, font, font scale, color (BGR), thickness of the line`.
+
+**3.2. Rounding format:** In this case, given the shape of the objects to be recognized, it was decided to implement a rectangular contour. For the above reason, `cv2.rectangle` is used, although if you want it to be circular, it is recommended to search the OpenCV documentation for `cv2.circle`.
+
+~~~
+####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
+cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255,255), 4)
+~~~
+
+**4. Messages on screen:** Print the results of 3 sections of the process, name of the image analyzed, an announcement that the image has been loaded, this shows us that the process of acquiring the data of said image was successful and finally prints the result of how many LEDs are in each state, being these:
+
+***First section***
+
+~~~
+	print("\n", f1) #picture name
+~~~
+
+***Second section***
+
+~~~
+	###### Announces every time an image is reviewed
+	print("Image loaded, analyzing patterns ...")
+~~~
+
+***Third section***
+
+~~~
+	print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
+	print("The number of LEDs in Yellow Orange state (on / problem) found is:      ", Quantity_Leds_YellowOrange)
+	print("The number of LEDs in Orange Orange status (problem / problem) found is:     ", Quantity_Leds_OrangeOrange)
+~~~
