@@ -21,14 +21,29 @@ An algorithm solves a particular problem, in this case the scenario of a laborat
 ## Identification methods
 Following the aforementioned, different identification methods were tested, among which the following can be mentioned along with their result:
 
+![image](https://github.com/brown9804/EIE_Project_stream_aruba_recognition/blob/master/Images_Recognition/ImgtoVerify/1GreenAngle.jpg)
+
 
 **1. By contour** This method uses cv2.findContours and cv2.drawContours for which we obtain a result like the one shown in the image:
+![image](https://drive.google.com/uc?export=view&id=15LgrQc-ybuNioDtGvtYb6XKHETdxiYPN)
+
+
 
 **2. Contour adjusted with denoising:** If we try to improve the previous method, we opted to try to filter the image noise a little, for this a filter of cv2.fastNlMeansDenoisingColored was applied, for which we obtain the following:
+![image](https://drive.google.com/uc?export=view&id=1bbmchlDV9M2E_l94OOukQelpTOyTjwEb)
 
-**3. Using the contour method with two filters (fastNlMeansDenoisingColored):** If we visualize this test with the previous one in figure 8, we can see that it loses sharpness and therefore loses quality in the image.
+
+
+**3. Using the contour method with two filters (fastNlMeansDenoisingColored):** If we visualize this test with the previous figure, we can see that it loses sharpness and therefore loses quality in the image.
+![image](https://drive.google.com/uc?export=view&id=1ESZitSft19KaQPDkx_v59I3XO7LoJ3ou)
+
+
+
 
 **4.Contour but capturing areas:** In this case, the image threshold was considered using cv2.threshold and cv2.findContours considering a minimum area found cv2.minAreaRec which returns a rotating rectangle and using cv2.boxPoints you can Access the pixels by traversing the points inside the box since it returns the coordinates of the corner points of the rotated rectangle.
+![image](https://drive.google.com/uc?export=view&id=1i6NfTOcrCh7zdtAPKDgrrIYwLeGlmkwQ)
+
+
 
 **5.Template method:**
 ##### Stage 1:
@@ -211,8 +226,8 @@ Since very similar values are obtained for the Y coordinate, we count the number
 
 Where following the order in which the syntax of cv2.putTex () is found, it follows that the parameters correspond to the following: image where it will be drawn, text to add, recognized pixel of the template to identify, font, font scale , color (BGR), thickness of the line.
 
-
-
+Resulting in:
+![image](https://drive.google.com/uc?export=view&id=1eVikYpYsry6HhfVRhKBwSY7G2qe-uYPe)
 
 
 
