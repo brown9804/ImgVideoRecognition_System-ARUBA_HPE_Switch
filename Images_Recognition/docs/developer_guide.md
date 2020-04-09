@@ -125,13 +125,12 @@ It is applied to the coordinate and, the same method of sorted ().
 		for itergreeny in sorted(location_green[1]):
 			if itergreeny not in Green_y:
 				Green_y.append(itergreeny)
-
 ~~~~~
 
 As in the x coordinate, the same procedure is implemented for the coordinate and only in this case, values of
 (1670,1671,1660,1670….) With very low differences between them, making sense since these differences are a product of the angle of inclination presented by the images.
 
-~~~~~~
+~~~~~
 		#####	Compying the vector to generate the second
 		Y_Green_before_filtered =  Green_y.copy()
 		##### Gets the first coordinate obtained from the list of elements without repetitions
@@ -140,8 +139,8 @@ As in the x coordinate, the same procedure is implemented for the coordinate and
 		Y_Green_before_filtered.pop(0)
 		######	The deleted coordinate is added to the result
 		Y_Green_Filtered.append(yGreen0)
-
 ~~~~~
+
 
 Arithmetic measurements are calculated on the obtained values. Remembering that the arithmetic mean which is obtained from the sum of all its values divided by the number of addends resulting in the beginning of the mathematical expectation or expected value. On the other hand, the standard deviation allows to quantify the variation or dispersion of a numerical data set.
 
@@ -155,7 +154,7 @@ Arithmetic measurements are calculated on the obtained values. Remembering that 
 		Y_ArithmeticAverage_Green = ArithmeticAveragelist(Green_y)
 		Y_Variance_Green = variance_list(Green_y)
 		Y_StandarDesv_Green = StandarDesv(Green_y)
-~~~~~~
+~~~~~
 
 Considering the switch structure, matches are filtered since only one match per LED position is required, so this part of code shows where the difference is calculated and compares this difference between adjacent pixels with the value of the difference between the arithmetic mean and its standard deviation.
 
