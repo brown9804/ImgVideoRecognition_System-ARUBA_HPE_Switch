@@ -153,61 +153,57 @@ res_matching_green = cv2.matchTemplate (img_gray, template_green, cv2.TM_CCOEFF_
 
 
 ```		########## IF THERE IS GREEN THEN ... ##########
-####### GREEN BEFORE FILTERING for X - without repeats
+####### GREEN BEFORE FILTERING for Y - without repeats
 if len(location_green[0]) > 0:
-	for itergreenx in sorted(location_green[0]):
-		if itergreenx not in Geen_x:
-			Geen_x.append(itergreenx)
-	###### Compying the vector without repetitions to generate the second to compare
-	X_Green_before_filtered =  Geen_x.copy()
-	######	Obtaining the first coordinate
-	xGreen0 = Geen_x[0]
-	###### Deleting the first coordinate
-	X_Green_before_filtered.pop(0)
-	######	The deleted coordinate is added to the result
-	X_Green_Filtered.append(xGreen0)
-	#####	Green before filtering for y - basically vector obtained minus repeated coordinates
-	for itergreeny in sorted(location_green[1]):
+	for itergreeny in sorted(location_green[0]):
 		if itergreeny not in Green_y:
 			Green_y.append(itergreeny)
-	#####	Compying the vector to generate the second
+	###### Compying the vector without repetitions to generate the second to compare
 	Y_Green_before_filtered =  Green_y.copy()
-	##### Gets the first coordinate obtained from the list of elements without repetitions
+	######	Obtaining the first coordinate
 	yGreen0 = Green_y[0]
-	#######	Deleting the first element to be able to subtract with the complete list
+	###### Deleting the first coordinate
 	Y_Green_before_filtered.pop(0)
 	######	The deleted coordinate is added to the result
 	Y_Green_Filtered.append(yGreen0)
-
-	########## 		GREEN	COORDENATES FILTERS ONE FOR LOCATION 	##########
-	#For green X
-	for e, i in sorted(zip(Geen_x, X_Green_before_filtered)):
-		#Difference between x coordinates
-		Diff_X_Green = i - e
-		if h_green < abs(Diff_X_Green):
-			X_Green_Filtered.append(i)
-	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
-	# Filter green y
-	for ee, ii in sorted(zip(Green_y, Y_Green_before_filtered)):
+	#####	Green before filtering for X - basically vector obtained minus repeated coordinates
+	for itergreenx in sorted(location_green[1]):
+		if itergreenx not in Green_x:
+			Green_x.append(itergreenx)
+	#####	Compying the vector to generate the second
+	X_Green_before_filtered =  Green_x.copy()
+	##### Gets the first coordinate obtained from the list of elements without repetitions
+	xGreen0 = Green_x[0]
+	#######	Deleting the first element to be able to subtract with the complete list
+	X_Green_before_filtered.pop(0)
+	######	The deleted coordinate is added to the result
+	X_Green_Filtered.append(xGreen0)
+	##########   GREEN COORDENATES FILTERS ONE FOR LOCATION		##########
+	#For green Y
+	for e, i in sorted(zip(Green_y, Y_Green_before_filtered)):
 		#Difference between y coordinates
-		Diff_Y_Green = ii - ee
-		if w_green < abs(Diff_Y_Green):
-			Y_Green_Filtered.append(ii)
+		Diff_Y_Green = i - e
+		if h_green < abs(Diff_Y_Green):
+			Y_Green_Filtered.append(i)
 	Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
-	#Counting the number of pixels each coordinate 
+	# Filter for the X
+	for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
+		#Difference between x coordinates
+		Diff_X_Green = ii - ee
+		if w_green < abs(Diff_X_Green):
+			X_Green_Filtered.append(ii)
+	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
+	#Counting the number of pixels each coordinate
 	number_X_Green = len(X_Green_Filtered)
 	number_Y_Green = len(Y_Green_Filtered)
 	HowManyGreen = 0
 	#Equalizing in order the number of pixels Y
-	while HowManyGreen < number_Y_Green-1:
+	while HowManyGreen < number_X_Green-1:
 		HowManyGreen = HowManyGreen +1
-		# print(HowManyGreen, X_Green_Filtered)
-		if number_X_Green != number_Y_Green and number_X_Green < number_Y_Green:
-			X_Green_Filtered.append(xGreen0)
-	# print("X_Green_Filtered", X_Green_Filtered)
-	# print("Y_Green_Filtered", Y_Green_Filtered)
+		if number_Y_Green != number_X_Green and number_Y_Green < number_X_Green:
+			Y_Green_Filtered.append(yGreen0)
 	######		Joining the two x, y coordinates
-	Green_filtered_coordenates = sorted(zip(Y_Green_Filtered, X_Green_Filtered))
+	Green_filtered_coordenates = sorted(zip(X_Green_Filtered, Y_Green_Filtered))
 	###### 	Draw the rectangle and label in that case where it finds green
 	for ptGreen in Green_filtered_coordenates:
 		####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
@@ -217,6 +213,7 @@ if len(location_green[0]) > 0:
 		##### 	Count the number of LEDs you found in this state
 		Quantity_Leds_Green = Quantity_Leds_Green +1
 	print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
+
 ```
 **2. Threshold adjustment:** Run the program and check if it identifies well, if not adjust the threshold. It is currently at 0.90 remembering that its value is in a range between 0 - 1, the closer it is to the more accurate it is.
 
