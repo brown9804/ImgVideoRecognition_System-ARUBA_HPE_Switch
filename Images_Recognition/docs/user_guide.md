@@ -97,6 +97,13 @@ The number of LEDs in Green Green status (on / on) found is: 1
 The number of LEDs in Yellow Orange state (on / problem) found is: 1
 The number of LEDs in Orange Orange status (problem / problem) found is: 1 
 
+/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/4Mixed.jpg
+Image loaded, analyzing patterns ...
+The number of LEDs in Green Green status (on / on) found is:       4
+The number of LEDs in Yellow Orange state (on / problem) found is:       4
+The number of LEDs in Orange Orange status (problem / problem) found is:      4
+
+
 ~~~~~
 
 **2. Shown in Python IDLE**
@@ -171,28 +178,20 @@ if len(location_green[0]) > 0:
 	Y_Green_before_filtered.pop(0)
 	######	The deleted coordinate is added to the result
 	Y_Green_Filtered.append(yGreen0)
-	#####	To automate the filtering, the dispersion MEASUREMENTSmeasurements are calculated
-	#For X
-	X_ArithmeticAverage_Green = ArithmeticAveragelist(Geen_x)
-	X_Variance_Green = variance_list(Geen_x)
-	X_StandarDesv_Green = StandarDesv(Geen_x)
-	#For Y
-	Y_ArithmeticAverage_Green = ArithmeticAveragelist(Green_y)
-	Y_Variance_Green = variance_list(Green_y)
-	Y_StandarDesv_Green = StandarDesv(Green_y)
+
 	########## 		GREEN	COORDENATES FILTERS ONE FOR LOCATION 	##########
 	#For green X
 	for e, i in sorted(zip(Geen_x, X_Green_before_filtered)):
 		#Difference between x coordinates
 		Diff_X_Green = i - e
-		if X_StandarDesv_Green < Diff_X_Green:
+		if h_green < abs(Diff_X_Green):
 			X_Green_Filtered.append(i)
 	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
 	# Filter green y
 	for ee, ii in sorted(zip(Green_y, Y_Green_before_filtered)):
 		#Difference between y coordinates
 		Diff_Y_Green = ii - ee
-		if Y_ArithmeticAverage_Green - Y_StandarDesv_Green < Diff_Y_Green:
+		if w_green < abs(Diff_Y_Green):
 			Y_Green_Filtered.append(ii)
 	Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
 	#Counting the number of pixels each coordinate 
@@ -219,11 +218,11 @@ if len(location_green[0]) > 0:
 		Quantity_Leds_Green = Quantity_Leds_Green +1
 	print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
 ```
-**2. Threshold adjustment:** Run the program and check if it identifies well, if not adjust the threshold. It is currently at 0.92 remembering that its value is in a range between 0 - 1, the closer it is to the more accurate it is.
+**2. Threshold adjustment:** Run the program and check if it identifies well, if not adjust the threshold. It is currently at 0.90 remembering that its value is in a range between 0 - 1, the closer it is to the more accurate it is.
 
 ~~~
 ######	Specifying (threshold)
-threshold= 0.92
+threshold= 0.90
 ~~~
 
 **3. Modifications to the image**
