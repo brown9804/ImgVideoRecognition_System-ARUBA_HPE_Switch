@@ -31,37 +31,6 @@ from collections import OrderedDict
 #     without_noise = cv2.filter2D(without_noise,-1,kernel)
 #     return without_noise
 
-##########  				FOR TUPLE 		   			##########
-
-# def ArithmeticAverageTUPLE(list):
-#     n = float(len(list))
-#     return tuple(sum(x[i] for x in list)/n for i in range (len(list[0])))
-
-
-# def varianceTUPLE(list):
-#     n = float(len(list))
-#     return tuple(sum(x[i] + (media_arit(list)-x[i])**2   for x in list)/n for i in range (len(list[0])))
-
-
-##########  				FOR LIST 		   			##########
-def ArithmeticAveragelist(list):
-	n = len(list)
-	sum = 0
-	for indice in range (0, n):
-		sum = sum + list[indice]
-	return sum/n
-
-def variance_list(list):
-	n = len(list)
-	sum = 0
-	for indice in range (0, n):
-		sum = sum + (ArithmeticAveragelist(list)-list[indice])**2
-	return sum/n
-
-def StandarDesv(list):
-	desvi = variance_list(list)**(1/2)
-	return desvi
-
 
 ######	Read the template
 template_green = cv2.imread('',0)
@@ -74,7 +43,7 @@ w_orange, h_orange = template_orange.shape[::-1]
 w_dark_orange, h_dark_orange = template_dark_orange.shape[::-1]
 
 ######	Specifying (threshold)
-threshold= 0.92
+threshold= 0.90
 ######	Directory with images verify
 img_dir = ''
 data_path = os.path.join(img_dir,'*.jpg')
@@ -124,7 +93,7 @@ for f1 in files:
 	OrangeOrange_filtered_coordenates = []
 	######	Number of LEDs in state # XXX
 	Quantity_Leds_OrangeOrange = 0
-
+	
 	##### Read each image
 	img = cv2.imread(f1)
 	print("\n", f1) #picture name
@@ -148,6 +117,7 @@ for f1 in files:
 	location_green = np.where(res_matching_green >= threshold)
 	location_orange = np.where(res_matching_orange >= threshold)
 	location_dark_orange = np.where(res_matching_dark_orange >= threshold)
+	
 				########## IF THERE IS GREEN THEN ... ##########
 	####### GREEN BEFORE FILTERING for X - without repeats
 	if len(location_green[0]) > 0:
@@ -174,28 +144,19 @@ for f1 in files:
 		Y_Green_before_filtered.pop(0)
 		######	The deleted coordinate is added to the result
 		Y_Green_Filtered.append(yGreen0)
-		#####	To automate the filtering, the dispersion MEASUREMENTS are calculated
-		### For green x
-		X_ArithmeticAverage_Green = ArithmeticAveragelist(Geen_x)
-		X_Variance_Green = variance_list(Geen_x)
-		X_StandarDesv_Green = StandarDesv(Geen_x)
-		#For green y 
-		Y_ArithmeticAverage_Green = ArithmeticAveragelist(Green_y)
-		Y_Variance_Green = variance_list(Green_y)
-		Y_StandarDesv_Green = StandarDesv(Green_y)
 			##########   GREEN COORDENATES FILTERS ONE FOR LOCATION								##########
 		#For green X
 		for e, i in sorted(zip(Geen_x, X_Green_before_filtered)):
 			#Difference between x coordinates
 			Diff_X_Green = i - e
-			if X_StandarDesv_Green < Diff_X_Green:
+			if h_green < abs(Diff_X_Green):
 				X_Green_Filtered.append(i)
 		X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
 		# Filter for the Y 
 		for ee, ii in sorted(zip(Green_y, Y_Green_before_filtered)):
 			#Difference between y coordinates
 			Diff_Y_Green = ii - ee
-			if Y_ArithmeticAverage_Green - Y_StandarDesv_Green < Diff_Y_Green:
+			if w_green < abs(Diff_Y_Green):
 				Y_Green_Filtered.append(ii)
 		Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
 		#Counting the number of pixels each coordinate 
@@ -218,6 +179,7 @@ for f1 in files:
 			##### 	Count the number of LEDs you found in this state
 			Quantity_Leds_Green = Quantity_Leds_Green +1
 		print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
+		
 				########## IF THERE IS YELLOW ORANGE THEN ... ##########
 	if len(location_orange[0]) > 0:
 		##### for x on yellow orange before filtered
@@ -244,25 +206,16 @@ for f1 in files:
 		Y_YellowOrange_before_filtered.pop(0)
 		###		The deleted coordinate is added to the result
 		Y_YellowOrange_Filtered.append(yYellowOrang0)
-		####	To automate the filtering, the dispersion MEASUREMENTS are calculated
-		#For X
-		X_ArithmeticAverage_YellowOrange = ArithmeticAveragelist(YellowOrange_x)
-		X_Variance_YellowOrange = variance_list(YellowOrange_x)
-		X_StandarDesv_YellowOrange = StandarDesv(YellowOrange_x)
-		#For Y
-		Y_ArithmeticAverage_YellowOrange = ArithmeticAveragelist(YellowOrange_y)
-		Y_Variance_YellowOrange = variance_list(YellowOrange_y)
-		Y_StandarDesv_YellowOrange = StandarDesv(YellowOrange_y)
 		#### Applying the same method for filter similar X COORDENATES
 		for eee,iii in sorted(zip(YellowOrange_x,X_YellowOrange_before_filtered)):
 			Diff_X_YellowOrnge = iii - eee
-			if X_StandarDesv_YellowOrange<Diff_X_YellowOrnge:
+			if h_orange < abs(Diff_X_YellowOrnge):
 				X_YellowOrange_Filtered.append(iii)
 		X_YellowOrange_Filtered = list(OrderedDict.fromkeys(X_YellowOrange_Filtered))
 		#### Applying the same method for filter similar Y COORDENATES
 		for eeee,iiii in sorted(zip(YellowOrange_y,Y_YellowOrange_before_filtered)):
 			Diff_Y_YellowOrnge = iiii - eeee
-			if Y_ArithmeticAverage_YellowOrange - Y_StandarDesv_YellowOrange < Diff_Y_YellowOrnge:
+			if w_orange < abs(Diff_Y_YellowOrnge):
 				Y_YellowOrange_Filtered.append(iiii)
 		Y_YellowOrange_Filtered = list(OrderedDict.fromkeys(Y_YellowOrange_Filtered))
 		#### counting the total of coordinates finally filtered
@@ -285,6 +238,7 @@ for f1 in files:
 			##### 	Count the number of LEDs you found in this state
 			Quantity_Leds_YellowOrange = Quantity_Leds_YellowOrange +1
 		print("The number of LEDs in Yellow Orange state (on / problem) found is:      ", Quantity_Leds_YellowOrange)
+		
 				########## IF THERE IS ORANGE ORANGE OR DARK ORANGE (IS THE SAME) THEN  ... ##########
 	if len(location_dark_orange[0]) > 0:
 		#####	For x on yellow orange before filtered
@@ -311,25 +265,16 @@ for f1 in files:
 		Y_OrangeOrange_before_filtered.pop(0)
 		###		The deleted coordinate is added to the result
 		Y_OrangeOrange_Filtered.append(yOrangOrang0)
-		####	To automate the filtering, the dispersion MEASUREMENTS are calculated
-		#	For X
-		X_ArithmeticAverage_OrangOrang = ArithmeticAveragelist(OrangeOrange_x)
-		X_Variance_OrangOrang = variance_list(OrangeOrange_x)
-		X_StandarDesv_OrangOrang = StandarDesv(OrangeOrange_x)
-		#	For Y
-		Y_ArithmeticAverage_OrangOrang = ArithmeticAveragelist(OrangeOrange_y)
-		Y_Variance_OrangOrang = variance_list(OrangeOrange_y)
-		Y_desvacion_estandar_NN = StandarDesv(OrangeOrange_y)
 		#### Applying the same method for filter similar X COORDENATES
 		for nne,nni in sorted(zip(OrangeOrange_x,X_OrangeOrange_before_filtered)):
 			Diff_X_OrangOrang = nni - nne
-			if X_StandarDesv_OrangOrang<Diff_X_OrangOrang:
+			if h_dark_orange < abs(Diff_X_OrangOrang):
 				X_OrangeOrange_Filtered.append(nni)
 		X_OrangeOrange_Filtered = list(OrderedDict.fromkeys(X_OrangeOrange_Filtered))
 		#### Applying the same method for filter similar Y COORDENATES
 		for nnee,nnii in sorted(zip(OrangeOrange_y,Y_OrangeOrange_before_filtered)):
 			Diff_Y_OrangOrang = nnii - nnee
-			if Y_ArithmeticAverage_OrangOrang - Y_desvacion_estandar_NN < Diff_Y_OrangOrang:
+			if w_dark_orange < abs(Diff_Y_OrangOrang):
 				Y_OrangeOrange_Filtered.append(nnii)
 		Y_OrangeOrange_Filtered = list(OrderedDict.fromkeys(Y_OrangeOrange_Filtered))
 		##### Counting the total of coordinates finally filtered
