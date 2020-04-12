@@ -115,8 +115,8 @@ Sorted () is a method that returns a sorted list of the specified iterable objec
 
 ~~~~~~
 	for itergreenx in sorted(location_green[0]):
-		if itergreenx not in Geen_x:
-			Geen_x.append(itergreenx)
+		if itergreenx not in Green_x:
+			Green_x.append(itergreenx)
 ~~~~~~~
 
 Since the intention of this method is to compare the difference between the previous coordinate, an array was generated that contains the same number of elements as the original array since the first coordinate is removed and the last one is copied, allowing the following logic to be performed of comparison put in example:
@@ -134,7 +134,7 @@ An arrangement is obtained with the coordinates (144, 145, 146, 147, 767, 768, 7
 
 ~~~~~
 
-It is applied to the coordinate and, the same method of sorted ().
+It is applied to the coordinate Y, the same method of sorted ().
 
 ~~~~~
 #####	Green before filtering for y - basically vector obtained minus repeated coordinates
@@ -161,36 +161,36 @@ Considering the switch structure, matches are filtered since only one match per 
 
 ~~~~~~
 ##########   GREEN COORDENATES FILTERS ONE FOR LOCATION		##########
-	#For green X
-	for e, i in sorted(zip(Geen_x, X_Green_before_filtered)):
-		#Difference between x coordinates
-		Diff_X_Green = i - e
-		if h_green < abs(Diff_X_Green):
-			X_Green_Filtered.append(i)
-	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
-	# Filter for the Y 
-	for ee, ii in sorted(zip(Green_y, Y_Green_before_filtered)):
+	#For green Y
+	for e, i in sorted(zip(Green_y, Y_Green_before_filtered)):
 		#Difference between y coordinates
-		Diff_Y_Green = ii - ee
-		if w_green < abs(Diff_Y_Green):
-			Y_Green_Filtered.append(ii)
+		Diff_Y_Green = i - e
+		if h_green < abs(Diff_Y_Green):
+			Y_Green_Filtered.append(i)
+	Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
+	# Filter for the X
+	for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
+		#Difference between x coordinates
+		Diff_X_Green = ii - ee
+		if w_green < abs(Diff_X_Green):
+			X_Green_Filtered.append(ii)
+	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
 ~~~~~~~
 
 Since very similar values are obtained for the Y coordinate, we count the number of filtered elements in the X coordinate arrangement and duplicate the first Y coordinate until the quantity of the X coordinate arrangement in elements equals. Finally obtaining the desired filtered coordinates.
 
 ~~~~~~
-	Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
 	#Counting the number of pixels each coordinate 
 	number_X_Green = len(X_Green_Filtered)
 	number_Y_Green = len(Y_Green_Filtered)
 	HowManyGreen = 0
 	#Equalizing in order the number of pixels Y
-	while HowManyGreen < number_Y_Green-1:
+	while HowManyGreen < number_X_Green-1:
 		HowManyGreen = HowManyGreen +1
-		if number_X_Green != number_Y_Green and number_X_Green < number_Y_Green:
-			X_Green_Filtered.append(xGreen0)
+		if number_Y_Green != number_X_Green and number_Y_Green < number_X_Green:
+			Y_Green_Filtered.append(yGreen0)
 	######		Joining the two x, y coordinates
-	Green_filtered_coordenates = sorted(zip(Y_Green_Filtered, X_Green_Filtered))
+	Green_filtered_coordenates = sorted(zip(X_Green_Filtered, Y_Green_Filtered))
 ~~~~~~
 
 
