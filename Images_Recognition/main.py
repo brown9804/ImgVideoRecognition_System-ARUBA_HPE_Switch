@@ -119,7 +119,7 @@ for f1 in files:
 	location_dark_orange = np.where(res_matching_dark_orange >= threshold)
 
 				########## IF THERE IS GREEN THEN ... ##########
-	####### GREEN BEFORE FILTERING for X - without repeats
+	####### GREEN BEFORE FILTERING for Y - without repeats
 	if len(location_green[0]) > 0:
 		for itergreeny in sorted(location_green[0]):
 			if itergreeny not in Green_y:
@@ -147,14 +147,14 @@ for f1 in files:
 			##########   GREEN COORDENATES FILTERS ONE FOR LOCATION								##########
 		#For green Y
 		for e, i in sorted(zip(Green_y, Y_Green_before_filtered)):
-			#Difference between x coordinates
+			#Difference between y coordinates
 			Diff_Y_Green = i - e
 			if h_green < abs(Diff_Y_Green):
 				Y_Green_Filtered.append(i)
 		Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
 		# Filter for the X
 		for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
-			#Difference between y coordinates
+			#Difference between x coordinates
 			Diff_X_Green = ii - ee
 			if w_green < abs(Diff_X_Green):
 				X_Green_Filtered.append(ii)
