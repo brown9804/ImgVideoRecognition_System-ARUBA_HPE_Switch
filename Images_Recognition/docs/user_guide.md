@@ -79,29 +79,35 @@ It is necessary to contemplate that given the way in which the problem was posed
 Depending on what the image contains, different results will be obtained, which present a format like the following after following the **3. Algorithm execution** instruction:
 
 ~~~~~
-/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/2OrangeOrange.jpg
+ /Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Images_Recognition/ImgtoVerify/3YellowOrange.jpg
 Image loaded, analyzing patterns ...
-The number of LEDs in Orange Orange status (problem / problem) found is: 2 
+The number of LEDs in Yellow Orange state (on / problem) found is:       3
+The number of ports are:       12
+Positions of the leds ON found [149, 814, 2124]
+Port 1 statuts:						Orange
+Port 3 statuts:						Orange
+Port 7 statuts:						Orange
 
-/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/1YellowOrange.jpg
+ /Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Images_Recognition/ImgtoVerify/1Mixed.jpg
 Image loaded, analyzing patterns ...
-The number of LEDs in Yellow Orange state (on / problem) found is: 1 
+The number of LEDs in Green Green status (on / on) found is:       1
+The number of LEDs in Yellow Orange state (on / problem) found is:       1
+The number of LEDs in Orange Orange status (problem / problem) found is:      1
+The number of ports are:       12
+Positions of the leds ON found [140, 800, 1446]
+Port 1 statuts:						Green
+Port 3 statuts:						Orange
+Port 5 statuts:						Dark Orange
 
-/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/5Green.jpg
+ /Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Images_Recognition/ImgtoVerify/4YellowOrange.jpg
 Image loaded, analyzing patterns ...
-The number of LEDs in Green Green status (on / on) found is: 5 
-
-/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/1Mixed.jpg
-Image loaded, analyzing patterns ...
-The number of LEDs in Green Green status (on / on) found is: 1
-The number of LEDs in Yellow Orange state (on / problem) found is: 1
-The number of LEDs in Orange Orange status (problem / problem) found is: 1 
-
-/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify/4Mixed.jpg
-Image loaded, analyzing patterns ...
-The number of LEDs in Green Green status (on / on) found is:       4
 The number of LEDs in Yellow Orange state (on / problem) found is:       4
-The number of LEDs in Orange Orange status (problem / problem) found is:      4
+The number of ports are:       12
+Positions of the leds ON found [149, 814, 2124, 3434]
+Port 1 statuts:						Orange
+Port 3 statuts:						Orange
+Port 7 statuts:						Orange
+Port 11 statuts:					Orange
 
 
 ~~~~~
