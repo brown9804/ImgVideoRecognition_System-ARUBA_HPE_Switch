@@ -429,11 +429,11 @@ for f1 in files:
 			x = i[0] - z
 			if x in range(-110,60):
 				if j in X_Green_Filtered:
-					print("Port", i[1], "statuts:						Green")
+					print("Port", i[1], "status:						Green")
 				elif j in X_YellowOrange_Filtered:
-					print("Port", i[1], "statuts:						Orange")
+					print("Port", i[1], "status:						Orange")
 				elif j in X_OrangeOrange_Filtered:
-					print("Port", i[1], "statuts:						Dark Orange")
+					print("Port", i[1], "status:						Dark Orange")
 	#### Shows me the figure already analyzed
 	cv2.imshow("\nProcessed Image",img)
 	### Since there are several, wait until you press a key and thus analyze the other image
