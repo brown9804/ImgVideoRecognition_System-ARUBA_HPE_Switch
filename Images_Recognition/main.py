@@ -50,6 +50,78 @@ def stddesv_list(list):
 	desvi = varnc_list(list)**(1/2)
 	return desvi
 
+def color_filter(colorlocation, w_color, h_color, imagen, color):
+					#######    FOR COLOR    #####
+	######	COMPARING  X
+	color_x = []
+	y_color_bf = []
+	######	COMPARING Y
+	color_y = []
+	x_color_bf = []
+	######	THE FILTERED COLOR COORDINATES
+	x_color_f =[]
+	y_color_f =[]
+	###	TO JOIN THE TWO COLOR VECTORS
+	color_flrd_cor = []
+	######	Number of LEDs in state # XXX
+	num_leds_color = 0
+	if len(colorlocation[0]) > 0:
+		##### for Y on color before filtered
+		for itercolory in sorted(colorlocation[0]):
+			if itercolory not in color_y:
+				color_y.append(itercolory)
+			####	Compying the vector without repetitions to generate the second to compare
+			y_color_bf =  color_y.copy()
+			####	Obtaining the first coordinate
+			y0_color = color_y[0]
+			####	Deleting the first coordinate
+			y_color_bf.pop(0)
+			#### 	The deleted coordinate is added to the result
+			y_color_f.append(y0_color)
+			#####	Color before filtering for X - basically vector obtained minus repeated coordinates
+			for itercolorx in sorted(colorlocation[1]):
+				if itercolorx not in color_x:
+					color_x.append(itercolorx)
+			####	Compying the vector to generate the second
+			x_color_bf =  color_x.copy()
+			####	Gets the first coordinate obtained from the list of elements without repetitions
+			x0_color = color_x[0]
+			###		Deleting the first element to be able to subtract with the complete list
+			x_color_bf.pop(0)
+			###		The deleted coordinate is added to the result
+			x_color_f.append(x0_color)
+		#### Applying the same method for filter similar Y COORDENATES
+		for eee,iii in sorted(zip(color_y,y_color_bf)):
+			diff_y_color = iii - eee
+			if h_orange < abs(diff_y_color):
+				y_color_f.append(iii)
+		y_color_f = list(OrderedDict.fromkeys(y_color_f))
+		#### Applying the same method for filter similar X COORDENATES
+		for eeee,iiii in sorted(zip(color_x,x_color_bf)):
+			diff_x_color = iiii - eeee
+			if w_orange < abs(diff_x_color):
+				x_color_f.append(iiii)
+		x_color_f = list(OrderedDict.fromkeys(x_color_f))
+		#### counting the total of coordinates finally filtered
+		nun_x_color = len(x_color_f)
+		nun_y_color = len(y_color_f)
+		how_many_color = 0
+		while how_many_color < nun_x_color-1 :
+			how_many_color = how_many_color +1
+			if nun_y_color != nun_x_color and nun_y_color < nun_x_color:
+				y_color_f.append(y0_color)
+		######		Joining the two x, y coordinates
+		color_flrd_cor = sorted(zip(x_color_f, y_color_f))
+		for ptcolor in color_flrd_cor:
+			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
+			cv2.rectangle(imagen, ptcolor, (ptcolor[0] + w_color, ptcolor[1] + h_color), (0,255,255), 4)
+			###	In this function the color goes BGR, what it does is put the text where it found the led
+			cv2.putText(imagen, str(color), ptcolor, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
+			##### 	Count the number of LEDs you found in this state
+			num_leds_color = num_leds_color +1
+		print("The number of LEDs in " + color + " status (on / on) found is:      ", num_leds_color)
+		return x_color_f
+
 ######	Read the template
 template_green = cv2.imread('',0)
 template_orange = cv2.imread('',0)
@@ -73,48 +145,6 @@ files = glob.glob(data_path)
 data = []
 ######	Analyzing all the images in the folder
 for f1 in files:
-					########   FOR GREEN     ######
-	######	COMPARING  X
-	Green_x = []
-	X_Green_before_filtered = []
-	######	COMPARING Y
-	Green_y = []
-	Y_Green_before_filtered = []
-	######	THE FILTERED GREEN COORDINATES
-	X_Green_Filtered =[]
-	Y_Green_Filtered =[]
-	########	TO JOIN THE TWO GREEN VECTORS
-	Green_filtered_coordenates = []
-	######	Number of LEDs in state # XXX
-	Quantity_Leds_Green = 0
-					#######    FOR YELLOW ORANGE    #####
-	######	COMPARING  X
-	YellowOrange_x = []
-	X_YellowOrange_before_filtered = []
-	######	COMPARING Y
-	YellowOrange_y = []
-	Y_YellowOrange_before_filtered = []
-	######	THE FILTERED YELLOW ORANGE COORDINATES
-	X_YellowOrange_Filtered =[]
-	Y_YellowOrange_Filtered =[]
-	###	TO JOIN THE TWO GREEN VECTORS
-	YellowOrange_filtered_coordenates = []
-	######	Number of LEDs in state # XXX
-	Quantity_Leds_YellowOrange = 0
-					#######    FOR ORANGE ORANGE     #####
-	######	COMPARING  X
-	OrangeOrange_x = []
-	X_OrangeOrange_before_filtered = []
-	######	COMPARING  Y
-	OrangeOrange_y = []
-	Y_OrangeOrange_before_filtered = []
-	######	THE FILTERED YELLOW ORANGE COORDINATES
-	X_OrangeOrange_Filtered =[]
-	Y_OrangeOrange_Filtered =[]
-	########	TO JOIN THE TWO GREEN VECTORS
-	OrangeOrange_filtered_coordenates = []
-	######	Number of LEDs in state # XXX
-	Quantity_Leds_OrangeOrange = 0
 					#######    FOR PORT     #####
 	port_x = []
 	port_x_bff = []
@@ -128,14 +158,13 @@ for f1 in files:
 	port_fil = []
 	# Count ports
 	count_port = 0
-	
+
 	##### Read each image
 	img = cv2.imread(f1)
 	print("\n", f1) #picture name
 	frames = cv2.imread(f1,0)
 	w_img, h_img = frames.shape[::-1]
 
-	
 	##### Store image data
 	data.append(img)
 	#####	uses a gray filter for easy recognition
@@ -153,192 +182,31 @@ for f1 in files:
 
 	###### Announces every time an image is reviewed
 	print("Image loaded, analyzing patterns ...")
-	###### gets the position of matching
+	###### Gets the position of matching
 	location_green = np.where(res_matching_green >= threshold)
 	location_orange = np.where(res_matching_orange >= threshold)
 	location_dark_orange = np.where(res_matching_dark_orange >= threshold)
 	location_port = np.where(res_matching_port >= thresholdport)
+	# Calling functions
+	X_Green_Filtered0 = color_filter(location_green, w_green, h_green, img, 'GREEN')
+	X_YellowOrange_Filtered0 = color_filter(location_orange, w_orange, h_orange, img, 'ORANGE')
+	X_OrangeOrange_Filtered0 = color_filter(location_dark_orange, w_dark_orange, h_dark_orange, img, 'DARK ORANGE')
+	# Checking empty
+	if X_Green_Filtered0:
+		X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered0))
+	else:
+		X_Green_Filtered = []
 
-				########## IF THERE IS GREEN THEN ... ##########
-	####### GREEN BEFORE FILTERING for Y - without repeats
-	if len(location_green[0]) > 0:
-		for itergreeny in sorted(location_green[0]):
-			if itergreeny not in Green_y:
-				Green_y.append(itergreeny)
-		###### Compying the vector without repetitions to generate the second to compare
-		Y_Green_before_filtered =  Green_y.copy()
-		######	Obtaining the first coordinate
-		yGreen0 = Green_y[0]
-		###### Deleting the first coordinate
-		Y_Green_before_filtered.pop(0)
-		######	The deleted coordinate is added to the result
-		Y_Green_Filtered.append(yGreen0)
-		#####	Green before filtering for X - basically vector obtained minus repeated coordinates
-		for itergreenx in sorted(location_green[1]):
-			if itergreenx not in Green_x:
-				Green_x.append(itergreenx)
-		#####	Compying the vector to generate the second
-		X_Green_before_filtered =  Green_x.copy()
-		##### Gets the first coordinate obtained from the list of elements without repetitions
-		xGreen0 = Green_x[0]
-		#######	Deleting the first element to be able to subtract with the complete list
-		X_Green_before_filtered.pop(0)
-		######	The deleted coordinate is added to the result
-		X_Green_Filtered.append(xGreen0)
-			##########   GREEN COORDENATES FILTERS ONE FOR LOCATION								##########
-		#For green Y
-		for e, i in sorted(zip(Green_y, Y_Green_before_filtered)):
-			#Difference between y coordinates
-			Diff_Y_Green = i - e
-			if h_green < abs(Diff_Y_Green):
-				Y_Green_Filtered.append(i)
-		Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
-		# Filter for the X
-		for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
-			#Difference between x coordinates
-			Diff_X_Green = ii - ee
-			if w_green < abs(Diff_X_Green):
-				X_Green_Filtered.append(ii)
-		X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
-		#Counting the number of pixels each coordinate
-		number_X_Green = len(X_Green_Filtered)
-		number_Y_Green = len(Y_Green_Filtered)
-		HowManyGreen = 0
-		#Equalizing in order the number of pixels Y
-		while HowManyGreen < number_X_Green-1:
-			HowManyGreen = HowManyGreen +1
-			if number_Y_Green != number_X_Green and number_Y_Green < number_X_Green:
-				Y_Green_Filtered.append(yGreen0)
-		######		Joining the two x, y coordinates
-		Green_filtered_coordenates = sorted(zip(X_Green_Filtered, Y_Green_Filtered))
-		###### 	Draw the rectangle and label in that case where it finds green
-		for ptGreen in Green_filtered_coordenates:
-			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
-			cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255,255), 4)
-			###	In this function the color goes BGR, what it does is put the text where it found the led
-			cv2.putText(img, 'GREEN', ptGreen, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
-			##### 	Count the number of LEDs you found in this state
-			Quantity_Leds_Green = Quantity_Leds_Green +1
-		print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
+	if X_YellowOrange_Filtered0:
+		X_YellowOrange_Filtered = list(OrderedDict.fromkeys(X_YellowOrange_Filtered0))
+	else:
+		X_YellowOrange_Filtered = []
 
-				########## IF THERE IS YELLOW ORANGE THEN ... ##########
-	if len(location_orange[0]) > 0:
-		##### for Y on yellow orange before filtered
-		for iteryelloworangY in sorted(location_orange[0]):
-			if iteryelloworangY not in YellowOrange_y:
-				YellowOrange_y.append(iteryelloworangY)
-			####	Compying the vector without repetitions to generate the second to compare
-			Y_YellowOrange_before_filtered =  YellowOrange_y.copy()
-			####	Obtaining the first coordinate
-			yYellowOrang0 = YellowOrange_y[0]
-			####	Deleting the first coordinate
-			Y_YellowOrange_before_filtered.pop(0)
-			#### 	The deleted coordinate is added to the result
-			Y_YellowOrange_Filtered.append(yYellowOrang0)
-			#####	yellow orange before filtering for X - basically vector obtained minus repeated coordinates
-			for iteryelloworangX in sorted(location_orange[1]):
-				if iteryelloworangX not in YellowOrange_x:
-					YellowOrange_x.append(iteryelloworangX)
-			####	Compying the vector to generate the second
-			X_YellowOrange_before_filtered =  YellowOrange_x.copy()
-			####	Gets the first coordinate obtained from the list of elements without repetitions
-			xYellowOrang0 = YellowOrange_x[0]
-			###		Deleting the first element to be able to subtract with the complete list
-			X_YellowOrange_before_filtered.pop(0)
-			###		The deleted coordinate is added to the result
-			X_YellowOrange_Filtered.append(xYellowOrang0)
-		#### Applying the same method for filter similar Y COORDENATES
-		for eee,iii in sorted(zip(YellowOrange_y,Y_YellowOrange_before_filtered)):
-			Diff_Y_YellowOrnge = iii - eee
-			if h_orange < abs(Diff_Y_YellowOrnge):
-				Y_YellowOrange_Filtered.append(iii)
-		Y_YellowOrange_Filtered = list(OrderedDict.fromkeys(Y_YellowOrange_Filtered))
-		#### Applying the same method for filter similar X COORDENATES
-		for eeee,iiii in sorted(zip(YellowOrange_x,X_YellowOrange_before_filtered)):
-			Diff_X_YellowOrnge = iiii - eeee
-			if w_orange < abs(Diff_X_YellowOrnge):
-				X_YellowOrange_Filtered.append(iiii)
-		X_YellowOrange_Filtered = list(OrderedDict.fromkeys(X_YellowOrange_Filtered))
-		#### counting the total of coordinates finally filtered
-		number_X_YellowOrange = len(X_YellowOrange_Filtered)
-		number_Y_YellowOrange = len(Y_YellowOrange_Filtered)
-		HowManyYellowOrange = 0
-		while HowManyYellowOrange < number_X_YellowOrange-1 :
-			HowManyYellowOrange = HowManyYellowOrange +1
-			if number_Y_YellowOrange != number_X_YellowOrange and number_Y_YellowOrange < number_X_YellowOrange:
-				Y_YellowOrange_Filtered.append(yYellowOrang0)
-		######		Joining the two x, y coordinates
-		YellowOrange_filtered_coordenates = sorted(zip(X_YellowOrange_Filtered, Y_YellowOrange_Filtered ))
-		###### 	Draw the rectangle and label in that case where it finds yellow orange
-		for ptYellowOrange in YellowOrange_filtered_coordenates:
-			#Draw a rectangle around the adapted region found in this case
-			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
-			cv2.rectangle(img, ptYellowOrange, (ptYellowOrange[0] + w_orange, ptYellowOrange[1] + h_orange), (0,255,255), 4)
-			###	In this function the color goes BGR, what it does is put the text where it found the led
-			cv2.putText(img, 'ORANGE', ptYellowOrange, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
-			##### 	Count the number of LEDs you found in this state
-			Quantity_Leds_YellowOrange = Quantity_Leds_YellowOrange +1
-		print("The number of LEDs in Yellow Orange state (on / problem) found is:      ", Quantity_Leds_YellowOrange)
+	if X_OrangeOrange_Filtered0:
+		X_OrangeOrange_Filtered = list(OrderedDict.fromkeys(X_OrangeOrange_Filtered0))
+	else:
+		X_OrangeOrange_Filtered = []
 
-				########## IF THERE IS ORANGE ORANGE OR DARK ORANGE (IS THE SAME) THEN  ... ##########
-	if len(location_dark_orange[0]) > 0:
-		#####	For Y on yellow orange before filtered
-		for iterdarkorangY in sorted(location_dark_orange[0]):
-			if iterdarkorangY not in OrangeOrange_y:
-				OrangeOrange_y.append(iterdarkorangY)
-		#### Compying the vector without repetitions to generate the second to compare
-		Y_OrangeOrange_before_filtered =  OrangeOrange_y.copy()
-		####	Obtaining the first coordinate
-		yOrangOrang0 = OrangeOrange_y[0]
-		####	Deleting the first coordinate
-		Y_OrangeOrange_before_filtered.pop(0)
-		#### 	The deleted coordinate is added to the result
-		Y_OrangeOrange_Filtered.append(yOrangOrang0)
-		#####	orange orange same dark orange before filtering for X - basically vector obtained minus repeated coordinates
-		for iterdarkorangX in sorted(location_dark_orange[1]):
-			if iterdarkorangX not in OrangeOrange_x:
-				OrangeOrange_x.append(iterdarkorangX)
-		####	Compying the vector to generate the second
-		X_OrangeOrange_before_filtered =  OrangeOrange_x.copy()
-		####	Gets the first coordinate obtained from the list of elements without repetitions
-		xOrangOrang0 = OrangeOrange_x[0]
-		###		Deleting the first element to be able to subtract with the complete list
-		X_OrangeOrange_before_filtered.pop(0)
-		###		The deleted coordinate is added to the result
-		X_OrangeOrange_Filtered.append(xOrangOrang0)
-		#### Applying the same method for filter similar Y COORDENATES
-		for nne,nni in sorted(zip(OrangeOrange_y,Y_OrangeOrange_before_filtered)):
-			Diff_Y_OrangOrang = nni - nne
-			if h_dark_orange < abs(Diff_Y_OrangOrang):
-				Y_OrangeOrange_Filtered.append(nni)
-		Y_OrangeOrange_Filtered = list(OrderedDict.fromkeys(Y_OrangeOrange_Filtered))
-		#### Applying the same method for filter similar X COORDENATES
-		for nnee,nnii in sorted(zip(OrangeOrange_x,X_OrangeOrange_before_filtered)):
-			Diff_X_OrangOrang = nnii - nnee
-			if w_dark_orange < abs(Diff_X_OrangOrang):
-				X_OrangeOrange_Filtered.append(nnii)
-		X_OrangeOrange_Filtered = list(OrderedDict.fromkeys(X_OrangeOrange_Filtered))
-		##### Counting the total of coordinates finally filtered
-		number_X_OrangOrang = len(X_OrangeOrange_Filtered)
-		number_Y_OrangOrang = len(Y_OrangeOrange_Filtered)
-		HowManyDarkOrange = 0
-		while HowManyDarkOrange < number_X_OrangOrang-1 :
-			HowManyDarkOrange = HowManyDarkOrange +1
-			if number_Y_OrangOrang != number_X_OrangOrang and number_Y_OrangOrang < number_X_OrangOrang:
-				Y_OrangeOrange_Filtered.append(yOrangOrang0)
-		######		Joining the two x, y coordinates
-		OrangeOrange_filtered_coordenates = sorted(zip(X_OrangeOrange_Filtered, Y_OrangeOrange_Filtered))
-		###### 	Draw the rectangle and label in that case where it finds orange orange
-		for ptOrangOrang in OrangeOrange_filtered_coordenates:
-			#Draw a rectangle around the adapted region found in this case
-			####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
-			cv2.rectangle(img, ptOrangOrang, (ptOrangOrang[0] + w_dark_orange, ptOrangOrang[1] + h_dark_orange), (0,255,255), 4)
-			###	In this function the color goes BGR, what it does is put the text where it found the led
-			cv2.putText(img, 'DARK ORANGE', ptOrangOrang, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
-			##### 	Count the number of LEDs you found in this state
-			Quantity_Leds_OrangeOrange = Quantity_Leds_OrangeOrange + 1
-		print("The number of LEDs in Orange Orange status (problem / problem) found is:     ", Quantity_Leds_OrangeOrange)
-	
 	####    				IF PORT EXIST ...
 	if len(location_port[0]) > 0:
 		##### Ports X coordenates without repeats
@@ -434,7 +302,7 @@ for f1 in files:
 					print("Port", i[1], "status:						Orange")
 				elif j in X_OrangeOrange_Filtered:
 					print("Port", i[1], "status:						Dark Orange")
-	#### Shows me the figure already analyzed
+	# #### Shows me the figure already analyzed
 	cv2.imshow("\nProcessed Image",img)
 	### Since there are several, wait until you press a key and thus analyze the other image
 	cv2.waitKey(0)
