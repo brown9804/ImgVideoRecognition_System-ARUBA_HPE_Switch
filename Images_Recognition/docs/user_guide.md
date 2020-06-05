@@ -130,97 +130,15 @@ If we consider the development algorithm, at the recognition level several chang
     **1.3 Quantity of objects:** The number of objects it identifies are 3 (different states), but if you want to increase or decrease the number of items, the idea would be to eliminate or add, whatever the case may be, a complete block contemplating the instructions provided. That is, you can guide yourself by looking at what elements the GREE object contains and thus identifying what belongs to it.
 
 ~~~~~
-######## FOR GREEN ######
-###### COMPARING X
-Geen_x = []
-X_Green_before_filtered = []
-###### COMPARING Y
-Green_y = []
-Y_Green_before_filtered = []
-###### THE FILTERED GREEN COORDINATES
-X_Green_Filtered = []
-Y_Green_Filtered = []
-######## TO JOIN THE TWO GREEN VECTORS
-Green_filtered_co ordinate = []
-###### Number of LEDs in state # XXX
-Quantity_Leds_Green = 0
+	X_Green_Filtered0 = color_filter(location_green, w_green, h_green, img, 'GREEN')
+	
+	# Checking empty
+	if X_Green_Filtered0:
+		X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered0))
+	else:
+		X_Green_Filtered = []
 ~~~~~
 
-
-~~~~~
-######## COMPARING THE IMAGE USING TEMPLATE METHOD ########
-res_matching_green = cv2.matchTemplate (img_gray, template_green, cv2.TM_CCOEFF_NORMED)
-~~~~~
-
-~~~~
-###### Gets the position
-	location_green = np.where(res_matching_green >= threshold)
-~~~~~
-
-
-```		########## IF THERE IS GREEN THEN ... ##########
-####### GREEN BEFORE FILTERING for Y - without repeats
-if len(location_green[0]) > 0:
-	for itergreeny in sorted(location_green[0]):
-		if itergreeny not in Green_y:
-			Green_y.append(itergreeny)
-	###### Compying the vector without repetitions to generate the second to compare
-	Y_Green_before_filtered =  Green_y.copy()
-	######	Obtaining the first coordinate
-	yGreen0 = Green_y[0]
-	###### Deleting the first coordinate
-	Y_Green_before_filtered.pop(0)
-	######	The deleted coordinate is added to the result
-	Y_Green_Filtered.append(yGreen0)
-	#####	Green before filtering for X - basically vector obtained minus repeated coordinates
-	for itergreenx in sorted(location_green[1]):
-		if itergreenx not in Green_x:
-			Green_x.append(itergreenx)
-	#####	Compying the vector to generate the second
-	X_Green_before_filtered =  Green_x.copy()
-	##### Gets the first coordinate obtained from the list of elements without repetitions
-	xGreen0 = Green_x[0]
-	#######	Deleting the first element to be able to subtract with the complete list
-	X_Green_before_filtered.pop(0)
-	######	The deleted coordinate is added to the result
-	X_Green_Filtered.append(xGreen0)
-	##########   GREEN COORDENATES FILTERS ONE FOR LOCATION		##########
-	#For green Y
-	for e, i in sorted(zip(Green_y, Y_Green_before_filtered)):
-		#Difference between y coordinates
-		Diff_Y_Green = i - e
-		if h_green < abs(Diff_Y_Green):
-			Y_Green_Filtered.append(i)
-	Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
-	# Filter for the X
-	for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
-		#Difference between x coordinates
-		Diff_X_Green = ii - ee
-		if w_green < abs(Diff_X_Green):
-			X_Green_Filtered.append(ii)
-	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
-	#Counting the number of pixels each coordinate
-	number_X_Green = len(X_Green_Filtered)
-	number_Y_Green = len(Y_Green_Filtered)
-	HowManyGreen = 0
-	#Equalizing in order the number of pixels Y
-	while HowManyGreen < number_X_Green-1:
-		HowManyGreen = HowManyGreen +1
-		if number_Y_Green != number_X_Green and number_Y_Green < number_X_Green:
-			Y_Green_Filtered.append(yGreen0)
-	######		Joining the two x, y coordinates
-	Green_filtered_coordenates = sorted(zip(X_Green_Filtered, Y_Green_Filtered))
-	###### 	Draw the rectangle and label in that case where it finds green
-	for ptGreen in Green_filtered_coordenates:
-		####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
-		cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255,255), 4)
-		###	In this function the color goes BGR, what it does is put the text where it found the led
-		cv2.putText(img, 'GREEN', ptGreen, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
-		##### 	Count the number of LEDs you found in this state
-		Quantity_Leds_Green = Quantity_Leds_Green +1
-	print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
-
-```
 **2. Threshold adjustment:** Run the program and check if it identifies well, if not adjust the threshold. It is currently at 0.90 remembering that its value is in a range between 0 - 1, the closer it is to the more accurate it is.
 
 ~~~
