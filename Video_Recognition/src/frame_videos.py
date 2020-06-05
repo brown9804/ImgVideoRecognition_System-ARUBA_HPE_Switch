@@ -1,5 +1,15 @@
 #Python3
 
+
+##--------------------------------Frame videos file------------------------------------
+##
+## Copyright (C) 2020 by Belinda Brown Ramírez (belindabrownr04@gmail.com)
+## 	Video framed for the image recognition system for
+##		 diagnosis of a network switch
+##
+##-----------------------------------------------------------------------------
+
+
 ##########  			IMPORTING PACKAGES   			##########
 
 import cv2
