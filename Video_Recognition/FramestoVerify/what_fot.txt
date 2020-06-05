@@ -1,0 +1,16 @@
+
+##--------------------------------Output_Folder ------------------------------------
+##
+## Copyright (C) 2020 by Belinda Brown Ramírez (belindabrownr04@gmail.com)
+## 	Output folder: video framed for the image recognition system for
+##		            diagnosis of a network switch
+##
+##-----------------------------------------------------------------------------
+
+
+What for?
+
+
+This folder is needed because
+is where the captured frames
+of each video will be stored
