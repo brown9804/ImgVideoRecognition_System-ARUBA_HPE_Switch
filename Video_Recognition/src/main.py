@@ -215,10 +215,10 @@ def port_filter(port_location, w_p, h_p, image, name):
 		return loc_full_port
 
 ######	Read the template
-template_green = cv2.imread('/Users/belindabrown/Desktop/Video_Recognition/Templates/ledGreen.jpg',0)
-template_orange = cv2.imread('/Users/belindabrown/Desktop/Video_Recognition/Templates/ledOrange.jpg',0)
-template_dark_orange = cv2.imread('/Users/belindabrown/Desktop/Video_Recognition/Templates/ledDarkOrange.jpg',0)
-template_port = cv2.imread('/Users/belindabrown/Desktop/Video_Recognition/Templates/ports.jpg',0)
+template_green = cv2.imread('/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/Templates/ledGreen.jpg',0)
+template_orange = cv2.imread('/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/Templates/ledOrange.jpg',0)
+template_dark_orange = cv2.imread('/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/Templates/ledDarkOrange.jpg',0)
+template_port = cv2.imread('/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/Templates/ports.jpg',0)
 
 ######	Store the width (w) and height (h) of the template
 w_green, h_green = template_green.shape[::-1]
@@ -227,11 +227,11 @@ w_dark_orange, h_dark_orange = template_dark_orange.shape[::-1]
 w_port, h_port = template_port.shape[::-1]
 
 ######	Specifying (threshold)
-threshold= 0.92
-thresholdport= 0.61
+threshold= 0.9
+thresholdport= 0.515
 
 ######	Directory with images verify
-img_dir = '/Users/belindabrown/Desktop/Video_Recognition/FramestoVerify'
+img_dir = '/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/FramestoVerify'
 data_path = os.path.join(img_dir,'*.jpg')
 files = glob.glob(data_path)
 data = []
@@ -301,7 +301,7 @@ for f1 in files:
 		for j in sorted(leds_on_fnd):
 			z = j + 20
 			x = i[0] - z
-			if x in range(-110,60):
+			if x in range(-150,70):
 				if j in X_Green_Filtered:
 					print("Port", i[1], "status:						Green")
 				elif j in X_YellowOrange_Filtered:
