@@ -23,7 +23,7 @@ from collections import OrderedDict
 
 
 ######	Directory with images verify
-img_dir = '/Users/belindabrown/Desktop/Video_Recognition/VdstoVerify/'
+img_dir = ''
 ##### Accesing path
 data_path = os.path.join(img_dir,'*.mp4')
 #####  Englobing data
@@ -66,7 +66,7 @@ for v1 in files:
 			for_name = str(img_counter) + str(past) +str(os_tr)
 			img_name = "{}.png".format(for_name)
 			img = cv2.resize(frame, (4160, 3120))
-			cv2.imwrite('/Users/belindabrown/Desktop/Video_Recognition/FramestoVerify/%s.jpg'%for_name, img)
+			cv2.imwrite('/%s.jpg'%for_name, img) #Need path
 			print("Image name: {}".format(for_name))
 			img_counter = img_counter + 1
 		past = past + ps
