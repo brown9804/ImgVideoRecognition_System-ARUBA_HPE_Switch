@@ -215,10 +215,10 @@ def port_filter(port_location, w_p, h_p, image, name):
 		return loc_full_port
 
 ######	Read the template
-template_green = cv2.imread('/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/Templates/ledGreen.jpg',0)
-template_orange = cv2.imread('/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/Templates/ledOrange.jpg',0)
-template_dark_orange = cv2.imread('/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/Templates/ledDarkOrange.jpg',0)
-template_port = cv2.imread('/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/Templates/ports.jpg',0)
+template_green = cv2.imread('',0)
+template_orange = cv2.imread('',0)
+template_dark_orange = cv2.imread('',0)
+template_port = cv2.imread('',0)
 
 ######	Store the width (w) and height (h) of the template
 w_green, h_green = template_green.shape[::-1]
@@ -231,7 +231,7 @@ threshold= 0.9
 thresholdport= 0.515
 
 ######	Directory with images verify
-img_dir = '/Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Video_Recognition/FramestoVerify'
+img_dir = ''
 data_path = os.path.join(img_dir,'*.jpg')
 files = glob.glob(data_path)
 data = []
