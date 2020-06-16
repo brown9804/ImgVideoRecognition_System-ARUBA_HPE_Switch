@@ -30,7 +30,7 @@ data_path = os.path.join(img_dir,'*.mp4')
 files = glob.glob(data_path)
 print("Amount of videos that is going to be analized:			", len(files))
 ######	Analyzing all the images in the folder
-for v1 in files:
+for v1 in sorted(files):
 	print("\n", v1)
 	# Start default camera
 	video = cv2.VideoCapture(v1)
