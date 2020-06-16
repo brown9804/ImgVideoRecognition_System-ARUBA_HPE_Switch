@@ -236,7 +236,7 @@ data_path = os.path.join(img_dir,'*.jpg')
 files = glob.glob(data_path)
 data = []
 ######	Analyzing all the images in the folder
-for f1 in files:
+for f1 in sorted(files):
 
 	##### Read each image
 	img = cv2.imread(f1)
