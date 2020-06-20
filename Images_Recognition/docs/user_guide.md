@@ -140,7 +140,6 @@ res_matching_green = cv2.matchTemplate(img_gray,template_green,cv2.TM_CCOEFF_NOR
 Add this line accordingly:
 ~~~~~
 location_green = np.where(res_matching_green >= threshold)
-
 ~~~~~
 
 Call the fucntion like this example:
