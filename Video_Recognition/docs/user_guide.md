@@ -222,8 +222,8 @@ elif j in X_OrangeOrange_Filtered:
 
 ~~~
 ######	Specifying (threshold)
-threshold= 0.90
-thresholdport= 0.70
+threshold= 0.9
+thresholdport= 0.515
 ~~~
 
 **3. Modifications to the image**
