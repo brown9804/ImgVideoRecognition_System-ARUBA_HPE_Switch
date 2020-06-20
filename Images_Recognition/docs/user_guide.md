@@ -146,7 +146,7 @@ location_green = np.where(res_matching_green >= threshold)
 Call the fucntion like this example:
 
 ~~~~~
-	X_Green_Filtered0 = color_filter(location_green, w_green, h_green, img, 'GREEN')
+X_Green_Filtered0 = color_filter(location_green, w_green, h_green, img, 'GREEN')
 ~~~~~
 
 You need to check if the array is empty
@@ -201,20 +201,20 @@ cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255
 ***First section***
 
 ~~~
-	print("\n", f1) #picture name
+print("\n", f1) #picture name
 ~~~
 
 ***Second section***
 
 ~~~
-	###### Announces every time an image is reviewed
-	print("Image loaded, analyzing patterns ...")
+###### Announces every time an image is reviewed
+print("Image loaded, analyzing patterns ...")
 ~~~
 
 ***Third section***
 
 ~~~
-	print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
-	print("The number of LEDs in Yellow Orange state (on / problem) found is:      ", Quantity_Leds_YellowOrange)
-	print("The number of LEDs in Orange Orange status (problem / problem) found is:     ", Quantity_Leds_OrangeOrange)
+print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
+print("The number of LEDs in Yellow Orange state (on / problem) found is:      ", Quantity_Leds_YellowOrange)
+print("The number of LEDs in Orange Orange status (problem / problem) found is:     ", Quantity_Leds_OrangeOrange)
 ~~~
