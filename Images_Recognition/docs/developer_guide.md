@@ -84,8 +84,6 @@ Finally, the algorithm present in the main.py was generated, capable of analyzin
 #                       [-1,-1,-1,-1,-1]])/8.0
 #     sin_ruido = cv2.filter2D(sin_ruido,-1,kernel)
 #     return sin_ruido
-
-
 ~~~~~~~~
 
 * **Comparison operation using cv2.matchTemplate ():**
@@ -96,7 +94,10 @@ b) make the dark parts of the negative values of the image and the bright parts 
 For example, inside the code you will find:
 
 ~~~~
-res_verde = cv2.matchTemplate(img_gray,template_green,cv2.TM_CCOEFF_NORMED)
+res_matching_green = cv2.matchTemplate(<image in gray>,<template that is going to used>,cv2.TM_CCOEFF_NORMED)
+
+Example:
+res_matching_green = cv2.matchTemplate(img_gray,template_green,cv2.TM_CCOEFF_NORMED)
 ~~~~~
 
 Whose parameters are: analyzed image converted to gray scale, image of the object you want to find, method to use.
@@ -104,93 +105,92 @@ Whose parameters are: analyzed image converted to gray scale, image of the objec
 * **Get the position where a pixel similar to the object was obtained:** This is done using np.where (), it returns elements where the implemented condition is met, in this case it returns a tuple with two arrays, one for the x coordinate and another one for the coordinate Y.
 
 ~~~~
-###### gets the position of matching 
+location = np.where(<res of matching template>    >=  <It is a threshold constant which is set according to the light variations that are possessed>
+
+Example:
 location_green = np.where(res_matching_green >= threshold)
-location_orange = np.where(res_matching_orange >= threshold)
-location_dark_orange = np.where(res_matching_dark_orange >= threshold)
 ~~~~
 
 * **Encompassing the method used in the second stage mentioned in 5. Template method the following is followed:**
 Sorted () is a method that returns a sorted list of the specified iterable object, so it is applied to the x coordinate.
 
 ~~~~~~
-	for itergreenx in sorted(location_green[0]):
-		if itergreenx not in Green_x:
-			Green_x.append(itergreenx)
+for itergreenx in sorted(location_green[0]):
+	if itergreenx not in Green_x:
+		Green_x.append(itergreenx)
 ~~~~~~~
 
 Since the intention of this method is to compare the difference between the previous coordinate, an array was generated that contains the same number of elements as the original array since the first coordinate is removed and the last one is copied, allowing the following logic to be performed of comparison put in example:
 An arrangement is obtained with the coordinates (144, 145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) with the following code section a second arrangement is produced with the coordinates (145, 146, 147 , 767, 768, 769, 771, 998, 1000, 1001) so if we compare the first the element of the second arrangement with that of the second would give us the existing difference. This happens at the x coordinate.
 
 ~~~~
-	###### Compying the vector without repetitions to generate the second to compare
-	X_Green_before_filtered =  Geen_x.copy()
-	######	Obtaining the first coordinate
-	xGreen0 = Geen_x[0]
-	###### Deleting the first coordinate
-	X_Green_before_filtered.pop(0)
-	######	The deleted coordinate is added to the result
-	X_Green_Filtered.append(xGreen0)
-
+###### Compying the vector without repetitions to generate the second to compare
+X_Green_before_filtered =  Geen_x.copy()
+######	Obtaining the first coordinate
+xGreen0 = Geen_x[0]
+###### Deleting the first coordinate
+X_Green_before_filtered.pop(0)
+######	The deleted coordinate is added to the result
+X_Green_Filtered.append(xGreen0)
 ~~~~~
 
 It is applied to the coordinate Y, the same method of sorted ().
 
 ~~~~~
 #####	Green before filtering for y - basically vector obtained minus repeated coordinates
-	for itergreeny in sorted(location_green[1]):
-		if itergreeny not in Green_y:
-			Green_y.append(itergreeny)
+for itergreeny in sorted(location_green[1]):
+	if itergreeny not in Green_y:
+		Green_y.append(itergreeny)
 ~~~~~
 
 As in the x coordinate, the same procedure is implemented for the coordinate and only in this case, values of
 (1670,1671,1660,1670….) With very low differences between them, making sense since these differences are a product of the angle of inclination presented by the images.
 
 ~~~~~
-	#####	Compying the vector to generate the second
-	Y_Green_before_filtered =  Green_y.copy()
-	##### Gets the first coordinate obtained from the list of elements without repetitions
-	yGreen0 = Green_y[0]
-	#######	Deleting the first element to be able to subtract with the complete list
-	Y_Green_before_filtered.pop(0)
-	######	The deleted coordinate is added to the result
-	Y_Green_Filtered.append(yGreen0)
+#####	Compying the vector to generate the second
+Y_Green_before_filtered =  Green_y.copy()
+##### Gets the first coordinate obtained from the list of elements without repetitions
+yGreen0 = Green_y[0]
+#######	Deleting the first element to be able to subtract with the complete list
+Y_Green_before_filtered.pop(0)
+######	The deleted coordinate is added to the result
+Y_Green_Filtered.append(yGreen0)
 ~~~~~
 
 Considering the switch structure, matches are filtered since only one match per LED position is required, so this part of code shows where the difference is calculated and compares this difference between adjacent pixels with the value of the width and length of each template.
 
 ~~~~~~
 ##########   GREEN COORDENATES FILTERS ONE FOR LOCATION		##########
-	#For green Y
-	for e, i in sorted(zip(Green_y, Y_Green_before_filtered)):
-		#Difference between y coordinates
-		Diff_Y_Green = i - e
-		if h_green < abs(Diff_Y_Green):
-			Y_Green_Filtered.append(i)
-	Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
-	# Filter for the X
-	for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
-		#Difference between x coordinates
-		Diff_X_Green = ii - ee
-		if w_green < abs(Diff_X_Green):
-			X_Green_Filtered.append(ii)
-	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
+#For green Y
+for e, i in sorted(zip(Green_y, Y_Green_before_filtered)):
+	#Difference between y coordinates
+	Diff_Y_Green = i - e
+	if h_green < abs(Diff_Y_Green):
+		Y_Green_Filtered.append(i)
+Y_Green_Filtered = list(OrderedDict.fromkeys(Y_Green_Filtered))
+# Filter for the X
+for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
+	#Difference between x coordinates
+	Diff_X_Green = ii - ee
+	if w_green < abs(Diff_X_Green):
+		X_Green_Filtered.append(ii)
+X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
 ~~~~~~~
 
 Since very similar values are obtained for the Y coordinate, we count the number of filtered elements in the X coordinate arrangement and duplicate the first Y coordinate until the quantity of the X coordinate arrangement in elements equals. Finally obtaining the desired filtered coordinates.
 
 ~~~~~~
-	#Counting the number of pixels each coordinate 
-	number_X_Green = len(X_Green_Filtered)
-	number_Y_Green = len(Y_Green_Filtered)
-	HowManyGreen = 0
-	#Equalizing in order the number of pixels Y
-	while HowManyGreen < number_X_Green-1:
-		HowManyGreen = HowManyGreen +1
-		if number_Y_Green != number_X_Green and number_Y_Green < number_X_Green:
-			Y_Green_Filtered.append(yGreen0)
-	######		Joining the two x, y coordinates
-	Green_filtered_coordenates = sorted(zip(X_Green_Filtered, Y_Green_Filtered))
+#Counting the number of pixels each coordinate 
+number_X_Green = len(X_Green_Filtered)
+number_Y_Green = len(Y_Green_Filtered)
+HowManyGreen = 0
+#Equalizing in order the number of pixels Y
+while HowManyGreen < number_X_Green-1:
+	HowManyGreen = HowManyGreen +1
+	if number_Y_Green != number_X_Green and number_Y_Green < number_X_Green:
+		Y_Green_Filtered.append(yGreen0)
+######		Joining the two x, y coordinates
+Green_filtered_coordenates = sorted(zip(X_Green_Filtered, Y_Green_Filtered))
 ~~~~~~
 
 
@@ -200,14 +200,13 @@ Since very similar values are obtained for the Y coordinate, we count the number
 
 ###### 	Draw the rectangle and label in that case where it finds green
 for ptGreen in Green_filtered_coordenates:
-	####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
-	cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255,255), 4)
-	###	In this function the color goes BGR, what it does is put the text where it found the led
-	cv2.putText(img, 'GREEN', ptGreen, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
-	##### 	Count the number of LEDs you found in this state
-	Quantity_Leds_Green = Quantity_Leds_Green +1
+####	cv2.rectangle(image where draw, place , color BGR, thick line drawing)
+cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255,255), 4)
+###	In this function the color goes BGR, what it does is put the text where it found the led
+cv2.putText(img, 'GREEN', ptGreen, cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 255, 255), 4)
+##### 	Count the number of LEDs you found in this state
+Quantity_Leds_Green = Quantity_Leds_Green +1
 print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
-
 ~~~~~~
 
 Where following the order in which the syntax of cv2.putTex () is found, it follows that the parameters correspond to the following: image where it will be drawn, text to add, recognized pixel of the template to identify, font, font scale , color (BGR), thickness of the line.
