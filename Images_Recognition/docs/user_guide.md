@@ -52,7 +52,7 @@ You must enter the address corresponding to your machine in parentheses, for exa
 In order for the Python interpreter to run the algorithm. You must go to the terminal or console that your machine owns, locate the file to be executed, which in this case is main.py, and put the following instruction
 
 ~~~~~
-PathWhereIsMain.py USER $ python3 main.py
+<PathWhereIsMain.py USER>$ python3 main.py
 ~~~~~
 
 If we consider the example that has been used, it would be as follows:
@@ -127,16 +127,47 @@ If we consider the development algorithm, at the recognition level several chang
     
     **1.2 Modify images to verify:** If you want to change what is identified in the images, it is recommended to store all the images in a folder first. Following the recognition model present in this section.
     
-    **1.3 Quantity of objects:** The number of objects it identifies are 3 (different states), but if you want to increase or decrease the number of items, the idea would be to eliminate or add, whatever the case may be, a complete block contemplating the instructions provided. That is, you can guide yourself by looking at what elements the GREE object contains and thus identifying what belongs to it.
+    **1.3 Quantity of objects:** The number of objects it identifies are 3 (different states), but if you want to increase or decrease the number of items, the idea would be to eliminate or add, whatever the case may be, call the function again but enter the corresponding parameters.
+
+~~~~~
+res_matching_green = cv2.matchTemplate(<image in gray>,<template that is going to used>,cv2.TM_CCOEFF_NORMED)
+
+Example:
+res_matching_green = cv2.matchTemplate(img_gray,template_green,cv2.TM_CCOEFF_NORMED)
+
+~~~~~
+
+Add this line accordingly:
+~~~~~
+location_green = np.where(res_matching_green >= threshold)
+
+~~~~~
+
+Call the fucntion like this example:
 
 ~~~~~
 	X_Green_Filtered0 = color_filter(location_green, w_green, h_green, img, 'GREEN')
-	
-	# Checking empty
-	if X_Green_Filtered0:
-		X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered0))
-	else:
-		X_Green_Filtered = []
+~~~~~
+
+You need to check if the array is empty
+~~~~~
+# Checking empty
+if X_Green_Filtered0:
+	X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered0))
+else:
+	X_Green_Filtered = []
+~~~~~
+
+Add the pixels in the sorted list for recognize the positions of the ports and relate them to the LEDs to obtain the status of each port.
+~~~~~
+leds_on_fnd = sorted(list(OrderedDict.fromkeys(X_YellowOrange_Filtered + X_Green_Filtered + X_OrangeOrange_Filtered)))
+~~~~~
+
+Finally, create another elif like the following example:
+
+~~~~~
+elif j in X_OrangeOrange_Filtered:
+	print("Port", i[1], "status:	
 ~~~~~
 
 **2. Threshold adjustment:** Run the program and check if it identifies well, if not adjust the threshold. It is currently at 0.90 remembering that its value is in a range between 0 - 1, the closer it is to the more accurate it is.
@@ -144,6 +175,7 @@ If we consider the development algorithm, at the recognition level several chang
 ~~~
 ######	Specifying (threshold)
 threshold= 0.90
+thresholdport= 0.70
 ~~~
 
 **3. Modifications to the image**
