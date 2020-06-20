@@ -211,6 +211,32 @@ print("The number of LEDs in Green Green status (on / on) found is:      ", Quan
 
 Where following the order in which the syntax of cv2.putTex () is found, it follows that the parameters correspond to the following: image where it will be drawn, text to add, recognized pixel of the template to identify, font, font scale , color (BGR), thickness of the line.
 
+
+* **Change range of axis x recognition:**
+This stage (is the one shown below) is used to relate the position of the ports, which are taken from a template of two ports and to obtain their total quantity it is multiplied by two. Since the template is identified by starting at position x0 the upper left corner is considered a range which is adjustable for this relationship.
+~~~~
+print("Positions of the leds ON found", leds_on_fnd)
+number_label = [1, 2, 3, 4, 5, 6, 7, 8, 9 ,10, 11 ,12]
+loc_led_templ = sorted(zip(loc_full_port,number_label))
+diff = [] # For the result of the sub created for filter positions
+for i in sorted(loc_led_templ):
+	for j in sorted(leds_on_fnd):
+		z = j + 20
+		x = i[0] - z
+		if x in range(-150,70):
+			if j in X_Green_Filtered:
+				print("Port", i[1], "status:						Green")
+			elif j in X_YellowOrange_Filtered:
+				print("Port", i[1], "status:						Orange")
+			elif j in X_OrangeOrange_Filtered:
+				print("Port", i[1], "status:
+~~~~
+To adjust the parameters, the values ​​are modified in:
+~~~~
+if x in range(-150,70):
+~~~~
+It is recommended to modify the first value being this -150 decreasing this value towards -∞.
+ 
 Resulting in:
 
 
