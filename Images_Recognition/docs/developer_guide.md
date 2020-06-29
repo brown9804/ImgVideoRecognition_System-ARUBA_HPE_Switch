@@ -151,8 +151,7 @@ for itergreeny in sorted(location_green[1]):
 		Green_y.append(itergreeny)
 ~~~~~
 
-As in the x coordinate, the same procedure is implemented for the coordinate and only in this case, values of
-(1670,1671,1660,1670….) With very low differences between them, making sense since these differences are a product of the angle of inclination presented by the images.
+As in the x coordinate, the same procedure is implemented for the coordinate and only in this case, values of (1670,1671,1660,1670….) With very low differences between them, making sense since these differences are a product of angle of angular inclination in the taking of images.
 
 ~~~~~
 #####	Compying the vector to generate the second
@@ -165,7 +164,7 @@ Y_Green_before_filtered.pop(0)
 Y_Green_Filtered.append(yGreen0)
 ~~~~~
 
-Considering the switch structure, matches are filtered since only one match per LED position is required, so this part of code shows where the difference is calculated and compares this difference between adjacent pixels with the value of the width and length of each template.
+Taking into account the structure of the algorithm, it is already able to filter the matches (the reason why filtering is required is that there should only be one pixel per LED position. This part of the code shows where the difference is calculated and compares this difference between pixels. adjacent with the value of the width and length of each template.
 
 ~~~~~~
 ##########   GREEN COORDENATES FILTERS ONE FOR LOCATION		##########
@@ -185,8 +184,9 @@ for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
 X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
 ~~~~~~~
 
-Since very similar values are obtained for the Y coordinate, we count the number of filtered elements in the X coordinate arrangement and duplicate the first Y coordinate until the quantity of the X coordinate arrangement in elements equals. Finally obtaining the desired filtered coordinates.
+Since very similar values are specified for the Y coordinate, we count the number of elements filtered in the X coordinate array and double the first Y coordinate until the number of marine elements is equal to the size of the Y coordinate array and the coordinates X be the same. 
 
+Finally, the filtered coordinates are obtained, this being what is desired.
 ~~~~~~
 #Counting the number of pixels each coordinate 
 number_X_Green = len(X_Green_Filtered)
@@ -217,11 +217,12 @@ Quantity_Leds_Green = Quantity_Leds_Green +1
 print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
 ~~~~~~
 
-Where following the order in which the syntax of cv2.putTex () is found, it follows that the parameters correspond to the following: image where it will be drawn, text to add, recognized pixel of the template to identify, font, font scale , color (BGR), thickness of the line.
+In order to explain the parameters of cv2.putTex (), follow the parameters corresponding to the following: image where it will be drawn, text to add, recognized pixel of the template to identify, font, font scale, color (BGR), line thickness.
 
 
-* **Change range of axis x recognition:**
-This stage (is the one shown below) is used to relate the position of the ports, which are taken from a template of two ports and to obtain their total quantity it is multiplied by two. Since the template is identified by starting at position x0 the upper left corner is considered a range which is adjustable for this relationship.
+* **Change the x-axis recognition range:**
+This stage (is the one shown below) is used to relate the position of the ports, where a template of two ports is taken and to obtain their total quantity it is multiplied by two. Since the template is identified starting at position x0, the upper left corner is considered an adjustable range for this relationship.
+
 ~~~~
 print("Positions of the leds ON found", leds_on_fnd)
 number_label = [1, 2, 3, 4, 5, 6, 7, 8, 9 ,10, 11 ,12]
