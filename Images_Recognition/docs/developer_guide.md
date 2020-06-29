@@ -16,43 +16,42 @@ The images used for the analysis are in .jpg format
 
 
 ## Methods to characterize the image
-An algorithm solves a particular problem, in this case the scenario of a laboratory is presented which, as indicated, does not present changes in the lighting and the captured images can contemplate a certain type of inclination as well as there may be modifications in the hardware since it is presented that you can analyze different switches. Once the initial tests have been carried out, these are the application of different filters with the intention of knowing the experimental characteristics of the images: Hue Saturation Value, filtering with upper and lower threshold (Limited color range), gray scale, scale to gray with threshold and binary cv2.THRESH_BINARY; it is observed that the behavior of the images with respect to the colors present in the original image and considering what the theory mentions tends to be an unexpected result.
+An algorithm solves a particular problem, in this case the scenario of a laboratory is presented that (as indicated) does not present changes in lighting and the captured images can contemplate a certain type of inclination, as well as there may be modifications in the hardware that It is presented that you can analyze different switches. Although once the initial tests have been carried out, the behavior of the images with respect to the colors present in the original image is observed and what the theory mentions to an unexpected result is considered. These tests can be summarized in the application of different filters with the intention of knowing the experimental characteristics of the images: hue saturation value, filter with upper and lower threshold (limited color range), gray scale, scale to gray with threshold and binary "cv2.THRESH_BINARY".
 
 ## Identification methods
-Following the aforementioned, different identification methods were tested, among which the following can be mentioned along with their result:
+Following the above, different identification methods were tested, among which the following can be mentioned along with their result:
 
 
 
 ![image](https://github.com/brown9804/EIE_Project_stream_aruba_recognition/blob/master/Images_Recognition/ImgtoVerify/1GreenAngle.jpg)
 
 
-**1. By contour** This method uses cv2.findContours and cv2.drawContours for which we obtain a result like the one shown in the image:
-
-
+**1. By contour** This method uses cv2.findContours and cv2.drawContours for which we get a result like the one shown in the image:
 
 
 ![image](https://drive.google.com/uc?export=view&id=15LgrQc-ybuNioDtGvtYb6XKHETdxiYPN)
 
 
 
-**2. Contour adjusted with denoising:** If we try to improve the previous method, we opted to try to filter the image noise a little, for this a filter of cv2.fastNlMeansDenoisingColored was applied, for which we obtain the following:
-
+**2. Contour adjusted with denoising:** If it's try to improve the previous method, you choose to slightly filter the image noise, for this a filter of cv2.fastNlMeansDenoisingColored was applied, where you get:
 
 
 ![image](https://drive.google.com/uc?export=view&id=1bbmchlDV9M2E_l94OOukQelpTOyTjwEb)
 
 
 
-**3. Using the contour method with two filters (fastNlMeansDenoisingColored):** If we visualize this test with the previous figure, we can see that it loses sharpness and therefore loses quality in the image.
-
-
+**3. Using the contour method with two filters (fastNlMeansDenoisingColored):** When this test is displayed, it is compared with this result and with the result of the method contour adjusted with noise elimination titulo_controno_no_noise, it is appreciated that sharpness is lost at the same time that image quality is lost.
 
 ![image](https://drive.google.com/uc?export=view&id=1ESZitSft19KaQPDkx_v59I3XO7LoJ3ou)
 
 
 
 
-**4.Contour but capturing areas:** In this case, the image threshold was considered using cv2.threshold and cv2.findContours considering a minimum area found cv2.minAreaRec which returns a rotating rectangle and using cv2.boxPoints you can Access the pixels by traversing the points inside the box since it returns the coordinates of the corner points of the rotated rectangle.
+**4.Contour but capturing areas:** In this case, certain considerations were made: 
+ 
+* The image threshold using cv2.threshold and cv2.findContours.
+ 
+* A minimal area using cv2.minAreaRec that returns a rotating rectangle and through cv2.boxPoints you can access the pixels that form inside the rectangle since it returns The coordinates of the corner points of the rotated rectangle.
 
 
 
