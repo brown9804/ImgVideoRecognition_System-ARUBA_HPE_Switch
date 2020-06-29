@@ -77,7 +77,7 @@ It is necessary to contemplate that given the way in which the problem was posed
 
 **1. Terminal Results**
 
-Depending on what the image contains, different results will be obtained, which present a format like the following after following the **3. Algorithm execution** instruction:
+Depending on what the image contains, different results will be obtained that are presented in a format like the following. This happens after applying what is described in the section **3. Algorithm execution**:
 
 ~~~~~
  /Users/belindabrown/Desktop/EIE_Project_stream_aruba_recognition-master/Images_Recognition/ImgtoVerify/3YellowOrange.jpg
@@ -109,18 +109,16 @@ Port 1 statuts:						Orange
 Port 3 statuts:						Orange
 Port 7 statuts:						Orange
 Port 11 statuts:					Orange
-
-
 ~~~~~
 
 **2. Shown in Python IDLE**
 
-A few seconds later it is shown depending on the cases and the number of LEDs that are lit, a window will be displayed with an analyzed image, to analyze the next image press any key.
+A few seconds later it is shown depending on the cases and the amount of LEDs that are lit, a window with a analyzed image will be displayed and to continue with the next image press any key.
 
 **Note:** If a zoomed image is displayed, consider double-clicking on the top bar of the window in order for the image to readjust.
 
 ## Settings
-If we consider the development algorithm, at the recognition level several changes can be made:
+If we consider the algorithm developed at the recognition level, several changes can be made:
 
 **1. Change of the object or objects to recognize:**
 
@@ -135,10 +133,10 @@ res_matching_green = cv2.matchTemplate(<image in gray>,<template that is going t
 
 Example:
 res_matching_green = cv2.matchTemplate(img_gray,template_green,cv2.TM_CCOEFF_NORMED)
-
 ~~~~~
 
-Add this line accordingly:
+Add this line following the parameters:
+
 ~~~~~
 location_green = np.where(res_matching_green >= threshold)
 ~~~~~
@@ -149,7 +147,8 @@ Call the fucntion like this example:
 X_Green_Filtered0 = color_filter(location_green, w_green, h_green, img, 'GREEN')
 ~~~~~
 
-You need to check if the array is empty
+Check if the array is empty at:
+
 ~~~~~
 # Checking empty
 if X_Green_Filtered0:
@@ -158,12 +157,12 @@ else:
 	X_Green_Filtered = []
 ~~~~~
 
-Add the pixels in the sorted list for recognize the positions of the ports and relate them to the LEDs to obtain the status of each port.
+Pixels are added in the ordered list to recognize the positions of the ports and match them to the LEDs to get the status of each port.
 ~~~~~
 leds_on_fnd = sorted(list(OrderedDict.fromkeys(X_YellowOrange_Filtered + X_Green_Filtered + X_OrangeOrange_Filtered)))
 ~~~~~
 
-Finally, create another elif like the following example:
+Finally, another elif must be implemented like the one in the following example:
 
 ~~~~~
 elif j in X_OrangeOrange_Filtered:
@@ -196,7 +195,7 @@ Where following the order in which the syntax of `cv2.putTex ()` is found, it fo
 cv2.rectangle(img, ptGreen, (ptGreen[0] + w_green, ptGreen[1] + h_green), (0,255,255), 4)
 ~~~
 
-**4. Messages on screen:** Print the results of 3 sections of the process, name of the image analyzed, an announcement that the image has been loaded, this shows us that the process of acquiring the data of said image was successful and finally prints the result of how many LEDs are in each state, being these:
+**4. Messages on screen:** It prints the results of 3 sections of the process, name of the image analyzed, an announcement that the image has been loaded, this shows us that the process of acquiring the data of said image was successful and finally prints the result of how many LEDs are in each state, being these:
 
 ***First section***
 
