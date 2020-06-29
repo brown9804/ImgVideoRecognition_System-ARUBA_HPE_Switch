@@ -47,7 +47,7 @@ Following the above, different identification methods were tested, among which t
 
 
 
-**4.Contour but capturing areas:** In this case, certain considerations were made: 
+**4.Outlined but capturing areas:** In this case, certain considerations were made: 
  
 * The image threshold using cv2.threshold and cv2.findContours.
  
@@ -61,17 +61,21 @@ Following the above, different identification methods were tested, among which t
 
 
 **5.Template method:**
-##### Stage 1:
+It did not work as expected, since the documentation recommended certain values in different parameters that did not allow adjusting the necessary recognition, therefore the parameters were tested both experimentally and by the history of the previous methods. Ending with obtaining the optimal values for these images, such as the threshold value.
 
-It did not work as expected, since the documentation recommended certain values in different parameters that did not allow adjusting the necessary recognition, so they were tested both experimentally and contemplating the tests carried out until optimal values were obtained for these images, as is the case. of the threshold. It should be remembered that this value is normalized between 0 and 1, so a value closer to one gives us greater precision.
+Remember that the value of this threshold must be a normalized value, that is, between 0 and 1 where a value closer to one gives us greater precision.
 
 ##### Stage 2:
-What this method does is to consider by pixel a part and the established threshold the values ​​that meet the conditions, obtaining in the same object identified for example LEDs in the ON state for the first port the following coordinates (145,1678), (146, 1678), (147,1679), (148,1677), (149,1677), (150,1676), (151,1677), (152,1677), (153,1678), (154,1675), (1515,1677), (156,1677) this being undesired therefore arithmetic calculations on a group of data were taken into account in this case the coordinates of the pixels to filter an object by location.
+What this method does is to consider each pixel and the established threshold the values ​​that the conditions consider. The result is a large number of pixels that match the identification of the LED template in a certain state. For example, applying this method on the image \ ref {fig:
+base_historial_imagen} we determine as base of explanation, for the first LED which can be seen that the ordered pairs of the location of the state ON for the first port: (145,1678), (146, 1678), (147,1679), (148,1677), (149,1677), (150,1676), (151,1677), (152,1677), (153,1678), (154, 1675), (1515,1677), (156 , 1677) this is not desired, therefore, several arithmetic calculations were considered in order to be able to filter the coordinates obtained only by location.
 
 
-Finally, the algorithm present in the main.py was generated, capable of analyzing the different states of LEDs since, through the aforementioned tests, it is considered that the colors present in the image do not present abrupt changes except for possible light intensities which may be picked up when a port is on. In order to explain some decisions made and delve into the explanation in the main.py file, we proceed to contextualize different decisions.
+Finally, the algorithm present in main.py was generated, capable of analyzing the different states of the LED development from the study and implementation, whether positive results or inconclusive tests that will provide knowledge about the characteristics of the recognition of the desired objects. Consider that the colors present in the image do not show abrupt changes, except for the possible light intensities that can be recovered when a port is activated.
 
-* **Filtering noise / Making the image sharp:** Using Kittler's thresholding using the tool previously created at https://github.com/brown9804/Image_Segmentation_Project- a variance of 1: 15.39 is obtained, so values of 15 are used for the images since they are considered to be laboratory without changes in lighting. Taking into account the different tests, the values 15 15 7 15 (approximately 30s) are considered, despite the fact that the literature read recommends values of 10 10 7 21 (approximately 1:42 minutes). This is kept in the general code because it may be necessary to analyze images that due to the lack of sharpness the program does not work.
+
+To explain some decisions made and delve into the explanation in the main.py file, we continue with the contextualization of different decisions.
+
+* **Filtering noise / Making the image sharp:** Using Kittler's thresholding using the tool previously created at https://github.com/brown9804/Image_Segmentation_Project- a variance of 1: 15.39 is obtained, so values of 15 are used for the images since they are considered to be laboratory without changes in lighting. Taking into account the different tests, the values 15 15 7 15 (approximately 30s) are considered, despite the fact that the literature read recommends values of 10 10 7 21 (approximately 1:42 minutes). This is kept in the general code because it may be necessary to analyze images that due to the lack of sharpness the program does not work completelly weel.
 
 ~~~~~~
 # def denoising_sharpening(input):
@@ -86,11 +90,13 @@ Finally, the algorithm present in the main.py was generated, capable of analyzin
 ~~~~~~~~
 
 * **Comparison operation using cv2.matchTemplate ():**
-Template Matching is a method of searching and finding the location of a template image in a larger image. OpenCV comes with a cv2.matchTemplate () function for this purpose. Simply slide the template image over the input image (as in 2D convolution) and compare the template and the input image patch below the template image. Various comparison methods are implemented in OpenCV. Returns a grayscale image, where each pixel indicates how closely the neighborhood of that pixel matches the template. TM_CCOEFF_NORMED does Correlation coefficient, the method is simply used to:
-a) make the template and image zero and
-b) make the dark parts of the negative values of the image and the bright parts of the positive values of the image.
+Template matching (cv2.matchTemplate) is a method of searching and finding the location of a template image in a larger image. OpenCV comes with a cv2.matchTemplate () function for this purpose. It works by sliding the template image over the input image (as in 2D convolution), comparing the template and the input image patch below the template image. By combining various OpenCV comparison methods, get a grayscale image, where each pixel indicates how closely they match that pixel's neighborhood to the template. TM_CCOEFF_NORMED does the correlation coefficient, the method is simply used to:
 
-For example, inside the code you will find:
+a) Make the template and image zero.
+
+b) Make the dark parts of the negative values of the image and the bright parts of the positive values of the image.
+
+For example, within the found code:
 
 ~~~~
 res_matching_green = cv2.matchTemplate(<image in gray>,<template that is going to used>,cv2.TM_CCOEFF_NORMED)
@@ -101,7 +107,7 @@ res_matching_green = cv2.matchTemplate(img_gray,template_green,cv2.TM_CCOEFF_NOR
 
 Whose parameters are: analyzed image converted to gray scale, image of the object you want to find, method to use.
 
-* **Get the position where a pixel similar to the object was obtained:** This is done using np.where (), it returns elements where the implemented condition is met, in this case it returns a tuple with two arrays, one for the x coordinate and another one for the coordinate Y.
+* **Get the position where a pixel similar to the object was obtained:** This is done using np.where (), it returns the elements where the implemented condition is met, in this case it returns a tuple with two matrices one for the coordinate x and another for the Y coordinate.
 
 ~~~~
 location = np.where(<res of matching template>    >=  <It is a threshold constant which is set according to the light variations that are possessed>
