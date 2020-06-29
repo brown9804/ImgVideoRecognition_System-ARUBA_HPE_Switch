@@ -20,8 +20,7 @@ The images used for the analysis are in .jpg format
 
 **1. Change in absolute paths of templates**
 
-Modify the absolute paths of the templates to use. This is found in the section of the main.py file which covers
-shown below.
+Modify the absolute paths of the templates to use. This is located in the section of the main.py file where a part of the algorithm similar to what is shown below is found.
 
 ~~~~~
 ###### Read the template
@@ -45,11 +44,11 @@ img_dir = ''
 
 You must enter the address corresponding to your machine in parentheses, for example:
 
-/ Users / belindabrown / Desktop / Folder1 / Images_Recognition / ImgtoVerify
+/Users/belindabrown/Desktop/Folder1/Images_Recognition/ImgtoVerify
 
 **3. Algorithm execution**
 
-In order for the Python interpreter to run the algorithm. You must go to the terminal or console that your machine owns, locate the file to be executed, which in this case is main.py, and put the following instruction
+In order for the Python interpreter to run the algorithm. You must go to the terminal or console that your machine owns, locate the file to be executed, which in this case is main.py, and put the following instruction.
 
 ~~~~~
 <PathWhereIsMain.py USER>$ python3 main.py
@@ -57,7 +56,9 @@ In order for the Python interpreter to run the algorithm. You must go to the ter
 
 If we consider the example that has been used, it would be as follows:
 
-Locating ourselves in the location / Users / belindabrown / Desktop / Folder1 / Images_Recognition
+Locating ourselves in:
+
+/Users/belindabrown/Desktop/Folder1/Images_Recognition
 
 Your computer will rename what comes before the $ in my case it is: 
 ~~~~~ 
