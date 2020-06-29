@@ -116,8 +116,8 @@ Example:
 location_green = np.where(res_matching_green >= threshold)
 ~~~~
 
-* **Encompassing the method used in the second stage mentioned in 5. Template method the following is followed:**
-Sorted () is a method that returns a sorted list of the specified iterable object, so it is applied to the x coordinate.
+* **Order the pixels obtained to relate them to the positions of the LEDs of each port:**
+Sorted () is a method that returns an ordered list of the specified iterable object, so it is applied to the x coordinate.
 
 ~~~~~~
 for itergreenx in sorted(location_green[0]):
@@ -125,8 +125,11 @@ for itergreenx in sorted(location_green[0]):
 		Green_x.append(itergreenx)
 ~~~~~~~
 
-Since the intention of this method is to compare the difference between the previous coordinate, an array was generated that contains the same number of elements as the original array since the first coordinate is removed and the last one is copied, allowing the following logic to be performed of comparison put in example:
-An arrangement is obtained with the coordinates (144, 145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) with the following code section a second arrangement is produced with the coordinates (145, 146, 147 , 767, 768, 769, 771, 998, 1000, 1001) so if we compare the first the element of the second arrangement with that of the second would give us the existing difference. This happens at the x coordinate.
+Since the intention of this method is to compare the difference between the previous coordinate, an array containing the same number of elements as the original array is generated, the first coordinate is removed and the last coordinate is copied, allowing the following logic to which will be exemplified by taking the initial image as the basis for analysis.
+
+An array is obtained with the coordinates (144, 145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) with the following code section, a second array is produced with the coordinates (145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) so if you compare the first value of the array, the element of the second array with the second would give us the existing difference.
+
+This happens at the x coordinate:
 
 ~~~~
 ###### Compying the vector without repetitions to generate the second to compare
