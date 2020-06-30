@@ -16,18 +16,17 @@ The images used for the analysis are in .jpg format
 
 
 ## Methods to characterize the image
-An algorithm solves a particular problem, in this case the scenario of a laboratory is presented which, as indicated, does not present changes in the lighting and the captured images can contemplate a certain type of inclination as well as there may be modifications in the hardware since it is presented that you can analyze different switches. Once the initial tests have been carried out, these are the application of different filters with the intention of knowing the experimental characteristics of the images: Hue Saturation Value, filtering with upper and lower threshold (Limited color range), gray scale, scale to gray with threshold and binary cv2.THRESH_BINARY; it is observed that the behavior of the images with respect to the colors present in the original image and considering what the theory mentions tends to be an unexpected result.
+An algorithm solves a particular problem, in this case the scenario of a laboratory is presented that (as indicated) does not present changes in lighting and the captured images can contemplate a certain type of inclination, as well as there may be modifications in the hardware that It is presented that you can analyze different switches. Although once the initial tests have been carried out, the behavior of the images with respect to the colors present in the original image is observed and what the theory mentions to an unexpected result is considered. These tests can be summarized in the application of different filters with the intention of knowing the experimental characteristics of the images: hue saturation value, filter with upper and lower threshold (limited color range), gray scale, scale to gray with threshold and binary "cv2.THRESH_BINARY".
 
 ## Identification methods
-Following the aforementioned, different identification methods were tested, among which the following can be mentioned along with their result:
+Following the above, different identification methods were tested, among which the following can be mentioned along with their result:
 
 
 
 ![image](https://github.com/brown9804/EIE_Project_stream_aruba_recognition/blob/master/Images_Recognition/ImgtoVerify/1GreenAngle.jpg)
 
 
-**1. By contour** This method uses cv2.findContours and cv2.drawContours for which we obtain a result like the one shown in the image:
-
+**1. By contour** This method uses cv2.findContours and cv2.drawContours for which we get a result like the one shown in the image:
 
 
 
@@ -35,7 +34,7 @@ Following the aforementioned, different identification methods were tested, amon
 
 
 
-**2. Contour adjusted with denoising:** If we try to improve the previous method, we opted to try to filter the image noise a little, for this a filter of cv2.fastNlMeansDenoisingColored was applied, for which we obtain the following:
+**2. Contour adjusted with denoising:** If it's try to improve the previous method, you choose to slightly filter the image noise, for this a filter of cv2.fastNlMeansDenoisingColored was applied, where you get:
 
 
 
@@ -43,17 +42,18 @@ Following the aforementioned, different identification methods were tested, amon
 
 
 
-**3. Using the contour method with two filters (fastNlMeansDenoisingColored):** If we visualize this test with the previous figure, we can see that it loses sharpness and therefore loses quality in the image.
-
-
+**3. Using the contour method with two filters (fastNlMeansDenoisingColored):** When this test is displayed, it is compared with this result and with the result of the method contour adjusted with noise elimination titulo_controno_no_noise, it is appreciated that sharpness is lost at the same time that image quality is lost.
 
 ![image](https://drive.google.com/uc?export=view&id=1ESZitSft19KaQPDkx_v59I3XO7LoJ3ou)
 
 
 
 
-**4.Contour but capturing areas:** In this case, the image threshold was considered using cv2.threshold and cv2.findContours considering a minimum area found cv2.minAreaRec which returns a rotating rectangle and using cv2.boxPoints you can Access the pixels by traversing the points inside the box since it returns the coordinates of the corner points of the rotated rectangle.
-
+**4.Outlined but capturing areas:** In this case, certain considerations were made: 
+ 
+* The image threshold using cv2.threshold and cv2.findContours.
+ 
+* A minimal area using cv2.minAreaRec that returns a rotating rectangle and through cv2.boxPoints you can access the pixels that form inside the rectangle since it returns The coordinates of the corner points of the rotated rectangle.
 
 
 
@@ -62,17 +62,21 @@ Following the aforementioned, different identification methods were tested, amon
 
 
 **5.Template method:**
-##### Stage 1:
+It did not work as expected, since the documentation recommended certain values in different parameters that did not allow adjusting the necessary recognition, therefore the parameters were tested both experimentally and by the history of the previous methods. Ending with obtaining the optimal values for these images, such as the threshold value.
 
-It did not work as expected, since the documentation recommended certain values in different parameters that did not allow adjusting the necessary recognition, so they were tested both experimentally and contemplating the tests carried out until optimal values were obtained for these images, as is the case. of the threshold. It should be remembered that this value is normalized between 0 and 1, so a value closer to one gives us greater precision.
+Remember that the value of this threshold must be a normalized value, that is, between 0 and 1 where a value closer to one gives us greater precision.
 
 ##### Stage 2:
-What this method does is to consider by pixel a part and the established threshold the values ​​that meet the conditions, obtaining in the same object identified for example LEDs in the ON state for the first port the following coordinates (145,1678), (146, 1678), (147,1679), (148,1677), (149,1677), (150,1676), (151,1677), (152,1677), (153,1678), (154,1675), (1515,1677), (156,1677) this being undesired therefore arithmetic calculations on a group of data were taken into account in this case the coordinates of the pixels to filter an object by location.
+What this method does is to consider each pixel and the established threshold the values ​​that the conditions consider. The result is a large number of pixels that match the identification of the LED template in a certain state. For example, applying this method on the image \ ref {fig:
+base_historial_imagen} we determine as base of explanation, for the first LED which can be seen that the ordered pairs of the location of the state ON for the first port: (145,1678), (146, 1678), (147,1679), (148,1677), (149,1677), (150,1676), (151,1677), (152,1677), (153,1678), (154, 1675), (1515,1677), (156 , 1677) this is not desired, therefore, several arithmetic calculations were considered in order to be able to filter the coordinates obtained only by location.
 
 
-Finally, the algorithm present in the main.py was generated, capable of analyzing the different states of LEDs since, through the aforementioned tests, it is considered that the colors present in the image do not present abrupt changes except for possible light intensities which may be picked up when a port is on. In order to explain some decisions made and delve into the explanation in the main.py file, we proceed to contextualize different decisions.
+Finally, the algorithm present in main.py was generated, capable of analyzing the different states of the LED development from the study and implementation, whether positive results or inconclusive tests that will provide knowledge about the characteristics of the recognition of the desired objects. Consider that the colors present in the image do not show abrupt changes, except for the possible light intensities that can be recovered when a port is activated.
 
-* **Filtering noise / Making the image sharp:** Using Kittler's thresholding using the tool previously created at https://github.com/brown9804/Image_Segmentation_Project- a variance of 1: 15.39 is obtained, so values of 15 are used for the images since they are considered to be laboratory without changes in lighting. Taking into account the different tests, the values 15 15 7 15 (approximately 30s) are considered, despite the fact that the literature read recommends values of 10 10 7 21 (approximately 1:42 minutes). This is kept in the general code because it may be necessary to analyze images that due to the lack of sharpness the program does not work.
+
+To explain some decisions made and delve into the explanation in the main.py file, we continue with the contextualization of different decisions.
+
+* **Filtering noise / Making the image sharp:** Using Kittler's thresholding using the tool previously created at https://github.com/brown9804/Image_Segmentation_Project- a variance of 1: 15.39 is obtained, so values of 15 are used for the images since they are considered to be laboratory without changes in lighting. Taking into account the different tests, the values 15 15 7 15 (approximately 30s) are considered, despite the fact that the literature read recommends values of 10 10 7 21 (approximately 1:42 minutes). This is kept in the general code because it may be necessary to analyze images that due to the lack of sharpness the program does not work completelly weel.
 
 ~~~~~~
 # def denoising_sharpening(input):
@@ -87,11 +91,13 @@ Finally, the algorithm present in the main.py was generated, capable of analyzin
 ~~~~~~~~
 
 * **Comparison operation using cv2.matchTemplate ():**
-Template Matching is a method of searching and finding the location of a template image in a larger image. OpenCV comes with a cv2.matchTemplate () function for this purpose. Simply slide the template image over the input image (as in 2D convolution) and compare the template and the input image patch below the template image. Various comparison methods are implemented in OpenCV. Returns a grayscale image, where each pixel indicates how closely the neighborhood of that pixel matches the template. TM_CCOEFF_NORMED does Correlation coefficient, the method is simply used to:
-a) make the template and image zero and
-b) make the dark parts of the negative values of the image and the bright parts of the positive values of the image.
+Template matching (cv2.matchTemplate) is a method of searching and finding the location of a template image in a larger image. OpenCV comes with a cv2.matchTemplate () function for this purpose. It works by sliding the template image over the input image (as in 2D convolution), comparing the template and the input image patch below the template image. By combining various OpenCV comparison methods, get a grayscale image, where each pixel indicates how closely they match that pixel's neighborhood to the template. TM_CCOEFF_NORMED does the correlation coefficient, the method is simply used to:
 
-For example, inside the code you will find:
+a) Make the template and image zero.
+
+b) Make the dark parts of the negative values of the image and the bright parts of the positive values of the image.
+
+For example, within the found code:
 
 ~~~~
 res_matching_green = cv2.matchTemplate(<image in gray>,<template that is going to used>,cv2.TM_CCOEFF_NORMED)
@@ -100,9 +106,10 @@ Example:
 res_matching_green = cv2.matchTemplate(img_gray,template_green,cv2.TM_CCOEFF_NORMED)
 ~~~~~
 
+
 Whose parameters are: analyzed image converted to gray scale, image of the object you want to find, method to use.
 
-* **Get the position where a pixel similar to the object was obtained:** This is done using np.where (), it returns elements where the implemented condition is met, in this case it returns a tuple with two arrays, one for the x coordinate and another one for the coordinate Y.
+* **Get the position where a pixel similar to the object was obtained:** This is done using np.where (), it returns the elements where the implemented condition is met, in this case it returns a tuple with two matrices one for the coordinate x and another for the Y coordinate.
 
 ~~~~
 location = np.where(<res of matching template>    >=  <It is a threshold constant which is set according to the light variations that are possessed>
@@ -111,8 +118,8 @@ Example:
 location_green = np.where(res_matching_green >= threshold)
 ~~~~
 
-* **Encompassing the method used in the second stage mentioned in 5. Template method the following is followed:**
-Sorted () is a method that returns a sorted list of the specified iterable object, so it is applied to the x coordinate.
+* **Order the pixels obtained to relate them to the positions of the LEDs of each port:**
+Sorted () is a method that returns an ordered list of the specified iterable object, so it is applied to the x coordinate.
 
 ~~~~~~
 for itergreenx in sorted(location_green[0]):
@@ -120,8 +127,11 @@ for itergreenx in sorted(location_green[0]):
 		Green_x.append(itergreenx)
 ~~~~~~~
 
-Since the intention of this method is to compare the difference between the previous coordinate, an array was generated that contains the same number of elements as the original array since the first coordinate is removed and the last one is copied, allowing the following logic to be performed of comparison put in example:
-An arrangement is obtained with the coordinates (144, 145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) with the following code section a second arrangement is produced with the coordinates (145, 146, 147 , 767, 768, 769, 771, 998, 1000, 1001) so if we compare the first the element of the second arrangement with that of the second would give us the existing difference. This happens at the x coordinate.
+Since the intention of this method is to compare the difference between the previous coordinate, an array containing the same number of elements as the original array is generated, the first coordinate is removed and the last coordinate is copied, allowing the following logic to which will be exemplified by taking the initial image as the basis for analysis.
+
+An array is obtained with the coordinates (144, 145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) with the following code section, a second array is produced with the coordinates (145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) so if you compare the first value of the array, the element of the second array with the second would give us the existing difference.
+
+This happens at the x coordinate:
 
 ~~~~
 ###### Compying the vector without repetitions to generate the second to compare
@@ -143,8 +153,7 @@ for itergreeny in sorted(location_green[1]):
 		Green_y.append(itergreeny)
 ~~~~~
 
-As in the x coordinate, the same procedure is implemented for the coordinate and only in this case, values of
-(1670,1671,1660,1670….) With very low differences between them, making sense since these differences are a product of the angle of inclination presented by the images.
+As in the x coordinate, the same procedure is implemented for the coordinate and only in this case, values of (1670,1671,1660,1670….) With very low differences between them, making sense since these differences are a product of angle of angular inclination in the taking of images.
 
 ~~~~~
 #####	Compying the vector to generate the second
@@ -157,8 +166,7 @@ Y_Green_before_filtered.pop(0)
 Y_Green_Filtered.append(yGreen0)
 ~~~~~
 
-Considering the switch structure, matches are filtered since only one match per LED position is required, so this part of code shows where the difference is calculated and compares this difference between adjacent pixels with the value of the width and length of each template.
-
+Taking into account the structure of the algorithm, it is already able to filter the matches (the reason why filtering is required is that there should only be one pixel per LED position. This part of the code shows where the difference is calculated and compares this difference between pixels. adjacent with the value of the width and length of each template.
 ~~~~~~
 ##########   GREEN COORDENATES FILTERS ONE FOR LOCATION		##########
 #For green Y
@@ -177,8 +185,9 @@ for ee, ii in sorted(zip(Green_x, X_Green_before_filtered)):
 X_Green_Filtered = list(OrderedDict.fromkeys(X_Green_Filtered))
 ~~~~~~~
 
-Since very similar values are obtained for the Y coordinate, we count the number of filtered elements in the X coordinate arrangement and duplicate the first Y coordinate until the quantity of the X coordinate arrangement in elements equals. Finally obtaining the desired filtered coordinates.
+Since very similar values are specified for the Y coordinate, we count the number of elements filtered in the X coordinate array and double the first Y coordinate until the number of marine elements is equal to the size of the Y coordinate array and the coordinates X be the same. 
 
+Finally, the filtered coordinates are obtained, this being what is desired.
 ~~~~~~
 #Counting the number of pixels each coordinate
 number_X_Green = len(X_Green_Filtered)
@@ -209,10 +218,11 @@ Quantity_Leds_Green = Quantity_Leds_Green +1
 print("The number of LEDs in Green Green status (on / on) found is:      ", Quantity_Leds_Green)
 ~~~~~~
 
-Where following the order in which the syntax of cv2.putTex () is found, it follows that the parameters correspond to the following: image where it will be drawn, text to add, recognized pixel of the template to identify, font, font scale , color (BGR), thickness of the line.
+In order to explain the parameters of cv2.putTex (), follow the parameters corresponding to the following: image where it will be drawn, text to add, recognized pixel of the template to identify, font, font scale, color (BGR), line thickness.
 
-* **Change range of axis x recognition:**
-This stage (is the one shown below) is used to relate the position of the ports, which are taken from a template of two ports and to obtain their total quantity it is multiplied by two. Since the template is identified by starting at position x0 the upper left corner is considered a range which is adjustable for this relationship.
+
+* **Change the x-axis recognition range:**
+This stage (is the one shown below) is used to relate the position of the ports, where a template of two ports is taken and to obtain their total quantity it is multiplied by two. Since the template is identified starting at position x0, the upper left corner is considered an adjustable range for this relationship.
 ~~~~
 print("Positions of the leds ON found", leds_on_fnd)
 number_label = [1, 2, 3, 4, 5, 6, 7, 8, 9 ,10, 11 ,12]
