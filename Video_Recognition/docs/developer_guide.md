@@ -3,6 +3,16 @@
 In order to run the program successfully, the following must be contained on your machine:
 
 ----------
+
+University of Costa Rica
+
+Belinda Brown, timna.brown@ucr.ac.cr
+
+June, 2020
+
+----------
+
+----------
 OpenCV 4.1.2
 
 Python 3.7.7
