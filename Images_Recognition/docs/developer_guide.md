@@ -1,5 +1,16 @@
 # Developer Guide
 
+----------
+
+University of Costa Rica
+
+Belinda Brown, timna.brown@ucr.ac.cr
+
+June, 2020
+
+----------
+
+
 In order to run the program successfully, the following must be contained on your machine:
 
 ----------
