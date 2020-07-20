@@ -139,7 +139,7 @@ for itergreenx in sorted(location_green[0]):
 
 Since the intention of this method is to compare the difference between the previous coordinate, an array containing the same number of elements as the original array is generated, the first coordinate is removed and the last coordinate is copied, allowing the following logic to which will be exemplified by taking the initial image as the basis for analysis.
 
-An array is obtained with the coordinates (144, 145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) with the following code section, a second array is produced with the coordinates (145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001). If we copy the first position delivered by the method into a new array, removing this value from the original array we can compare two arrays with the same number of items and calculate the difference between the existing coordinates.
+An array is obtained with the coordinates (144, 145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001) with the following code section, a second array is produced with the coordinates (145, 146, 147, 767, 768, 769, 771, 998, 1000, 1001). If the first position delivered by the method is copied to a new array, removing this value from the original array we can compare two arrays with the same number of items and calculate the difference between the existing coordinates.
 
 This happens at the x coordinate:
 
