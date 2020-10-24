@@ -10,7 +10,6 @@ Belinda Brown, timna.brown@ucr.ac.cr
 
 June, 2020
 
-----------
 
 ----------
 OpenCV 4.1.2
