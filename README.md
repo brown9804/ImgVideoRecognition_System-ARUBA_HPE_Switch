@@ -1,15 +1,18 @@
 # EIE Graduation Project: Image recognition system for diagnosing a network switch
 
-----------
-
 University of Costa Rica
 
-Belinda Brown, timna.brown@ucr.ac.cr
+[![GitHub](https://img.shields.io/badge/--181717?logo=github&logoColor=ffffff)](https://github.com/)
+[brown9804](https://github.com/brown9804)
 
-June, 2020
+Last updated: 2020-06-11
 
 ----------
 
+<div align="center">
+  <h3 style="color: #4CAF50;">Total Visitors</h3>
+  <img src="https://profile-counter.glitch.me/brown9804/count.svg" alt="Visitor Count" style="border: 2px solid #4CAF50; border-radius: 5px; padding: 5px;"/>
+</div>
 
 The next project is carried out using an HPE idea for the electrical engineering graduation project.
 The main objective is to develop an algorithm using Python and other tools such as OpenCV for the automated
